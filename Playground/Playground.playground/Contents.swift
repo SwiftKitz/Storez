@@ -3,7 +3,7 @@ import Foundation
 import Storez
 
 //: # Storez 💾
-//: ### Safer key-value stores
+//: ### Safe, statically-typed, store-agnostic key-value storage!
 //: __NOTE:__ This is an OSX playground in order to test NSUserDefaults
 
 //: ## Features

@@ -4,7 +4,7 @@
 ![Version](https://img.shields.io/badge/version-prerelease-orange.svg)
 [![Travis CI](https://travis-ci.org/SwiftKitz/Storez.svg?branch=master)](https://travis-ci.org/SwiftKitz/Storez)
 ![Swift](https://img.shields.io/badge/swift-2.1-blue.svg)
-![Platforms](https://img.shields.io/badge/platform-ios-lightgrey.svg)
+![Platforms](https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg)
 
 Safe, statically-typed, store-agnostic key-value storage!
 
