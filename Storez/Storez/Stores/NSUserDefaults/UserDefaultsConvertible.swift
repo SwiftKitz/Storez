@@ -7,7 +7,7 @@
 //
 
 
-/** Other types can conform to this prototol to add  support.
+/** Other types can conform to this protocol to add  support.
     It simply requires the class to convert to and from one of
     the supported types.
 */
