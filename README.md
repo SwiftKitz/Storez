@@ -64,7 +64,7 @@ store.clear() // Start fresh every time for testing
 
 __Optionality is honored throughout__
 
-```
+```swift
 let nullable = Entry<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
 store.get(nullable)?.isEmpty   // nil
 store.set(nullable, value: "")
