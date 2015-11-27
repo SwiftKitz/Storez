@@ -33,33 +33,3 @@ extension NSData: UserDefaultsSerializable {}
 extension NSNumber: UserDefaultsSerializable {}
 extension NSString: UserDefaultsSerializable {}
 
-
-/**
-    Adding support to the above UserDefaultsSerializable requires
-    boxing, since they lack required initializers and can't be
-    constructed in a safe and generic way.
- */
-
-struct Box<T: UserDefaultsSerializable> {
-    
-    let value: T
-    
-    init(_ value: T) {
-        self.value = value
-    }
-}
-
-extension Box: UserDefaultsConvertible {
-    
-    typealias UnderlyingType = T
-    
-    static func decode(value: UnderlyingType) -> Box? {
-        return self.init(value)
-    }
-    
-    var encode: UnderlyingType? {
-        return value
-    }
-}
-
-
