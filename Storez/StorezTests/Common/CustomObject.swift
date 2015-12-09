@@ -25,9 +25,9 @@ func ==(lhs: CustomObject, rhs: CustomObject) -> Bool {
 
 extension CustomObject: UserDefaultsConvertible {
     
-    typealias UnderlyingType = NSDictionary
+    typealias UserDefaultsType = NSDictionary
 
-    static func decode(value: UnderlyingType) -> CustomObject? {
+    static func decode(userDefaultsValue value: UserDefaultsType) -> CustomObject? {
         
         return CustomObject(
             title: value["title"] as! String,
@@ -35,7 +35,7 @@ extension CustomObject: UserDefaultsConvertible {
         )
     }
     
-    var encode: UnderlyingType? {
+    var encodeForUserDefaults: UserDefaultsType? {
         return [
             "title": title,
             "year": year,

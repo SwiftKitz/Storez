@@ -54,11 +54,11 @@ public final class UserDefaultsStore: Store {
 
     public func get<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
         
-        let serializedValue: E.ValueType.UnderlyingType? = _get(entry.key)
+        let serializedValue: E.ValueType.UserDefaultsType? = _get(entry.key)
         var resultValue: E.ValueType? = nil
         
         if let serializedValue = serializedValue {
-            resultValue = E.ValueType.decode(serializedValue)
+            resultValue = E.ValueType.decode(userDefaultsValue: serializedValue)
         }
         
         return resultValue ?? entry.defaultValue
@@ -66,11 +66,11 @@ public final class UserDefaultsStore: Store {
     
     public func get<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E) -> V? {
         
-        let serializedValue: V.UnderlyingType? = _get(entry.key)
+        let serializedValue: V.UserDefaultsType? = _get(entry.key)
         var resultValue: V? = nil
         
         if let serializedValue = serializedValue {
-            resultValue = V.decode(serializedValue)
+            resultValue = V.decode(userDefaultsValue: serializedValue)
         }
         
         return resultValue ?? entry.defaultValue
@@ -103,13 +103,13 @@ public final class UserDefaultsStore: Store {
     public func set<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E, value: E.ValueType) {
         
         let newValue = entry.willChange(value)
-        _set(entry, value: newValue.encode)
+        _set(entry, value: newValue.encodeForUserDefaults)
     }
     
     public func set<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E, value: V?) {
         
         let newValue = entry.willChange(value)
-        _set(entry, value: newValue?.encode)
+        _set(entry, value: newValue?.encodeForUserDefaults)
     }
     
     public func set<E: EntryType where E.ValueType: NSCoding>(entry: E, value: E.ValueType) {

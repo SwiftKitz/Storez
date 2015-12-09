@@ -13,65 +13,65 @@ import Foundation
 */
 extension Int: UserDefaultsConvertible {
     
-    public typealias UnderlyingType = NSNumber
+    public typealias UserDefaultsType = NSNumber
     
-    public static func decode(value: UnderlyingType) -> Int? {
+    public static func decode(userDefaultsValue value: UserDefaultsType) -> Int? {
         return value.integerValue
     }
     
-    public var encode: UnderlyingType? {
+    public var encodeForUserDefaults: UserDefaultsType? {
         return NSNumber(integer: self)
     }
 }
 
 extension Double: UserDefaultsConvertible {
     
-    public typealias UnderlyingType = NSNumber
+    public typealias UserDefaultsType = NSNumber
     
-    public static func decode(value: UnderlyingType) -> Double? {
+    public static func decode(userDefaultsValue value: UserDefaultsType) -> Double? {
         return value.doubleValue
     }
     
-    public var encode: UnderlyingType? {
+    public var encodeForUserDefaults: UserDefaultsType? {
         return NSNumber(double: self)
     }
 }
 
 extension Bool: UserDefaultsConvertible {
     
-    public typealias UnderlyingType = NSNumber
+    public typealias UserDefaultsType = NSNumber
     
-    public static func decode(value: UnderlyingType) -> Bool? {
+    public static func decode(userDefaultsValue value: UserDefaultsType) -> Bool? {
         return value.boolValue
     }
     
-    public var encode: UnderlyingType? {
+    public var encodeForUserDefaults: UserDefaultsType? {
         return NSNumber(bool: self)
     }
 }
 
 extension Float: UserDefaultsConvertible {
     
-    public typealias UnderlyingType = NSNumber
+    public typealias UserDefaultsType = NSNumber
     
-    public static func decode(value: UnderlyingType) -> Float? {
+    public static func decode(userDefaultsValue value: UserDefaultsType) -> Float? {
         return value.floatValue
     }
     
-    public var encode: UnderlyingType? {
+    public var encodeForUserDefaults: UserDefaultsType? {
         return NSNumber(float: self)
     }
 }
 
 extension String: UserDefaultsConvertible {
     
-    public typealias UnderlyingType = NSString
+    public typealias UserDefaultsType = NSString
     
-    public static func decode(value: UnderlyingType) -> String? {
+    public static func decode(userDefaultsValue value: UserDefaultsType) -> String? {
         return value as String
     }
     
-    public var encode: UnderlyingType? {
+    public var encodeForUserDefaults: UserDefaultsType? {
         return self as NSString
     }
 }

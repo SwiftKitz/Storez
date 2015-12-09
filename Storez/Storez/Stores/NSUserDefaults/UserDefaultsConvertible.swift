@@ -9,7 +9,9 @@
 
 /** See ConvertibleValue for more information
 */
-public protocol UserDefaultsConvertible: ConvertibleValue {
-    typealias UnderlyingType: UserDefaultsSupportedType
-}
+public protocol UserDefaultsConvertible {
+    typealias UserDefaultsType: UserDefaultsSupportedType
 
+    static func decode(userDefaultsValue value: UserDefaultsType) -> Self?
+    var encodeForUserDefaults: UserDefaultsType? { get }
+}

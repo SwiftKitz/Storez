@@ -8,6 +8,10 @@
 
 /** See ConvertibleValue for more info
 */
-protocol CacheConvertible: ConvertibleValue {
-    typealias UnderlyingType: CacheSupportedType
+public protocol CacheConvertible {
+    
+    typealias CacheType: CacheSupportedType
+    
+    static func decode(cacheValue value: CacheType) -> Self?
+    var encodeForCache: CacheType? { get }
 }

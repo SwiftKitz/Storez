@@ -8,4 +8,4 @@
 
 /** NSCache only requires objects to conform to AnyObject
 */
-public protocol CacheSupportedType: AnyObject {}
+public typealias CacheSupportedType = AnyObject
