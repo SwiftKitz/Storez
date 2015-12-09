@@ -10,18 +10,6 @@ import XCTest
 import Storez
 
 
-// FIXME: Defining this within a function doesn't compile
-private struct AnyGroup: Group {
-    
-    static var called = false
-    static let id = "any-group"
-    
-    static func postCommitHook() {
-        called = true
-    }
-}
-
-
 class UserDefaultsStoreTests: XCTestCase {
     
     let store = UserDefaultsStore(suite: "io.kitz.storez.test")
@@ -102,7 +90,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testChangeBlockIsTriggered() {
         
-        let changingEntry = Entry<TestGroup, String?>(id: "changing-object", defaultValue: nil) {
+        let changingEntry = Entry<GlobalGroup, String?>(id: "changing-object", defaultValue: nil) {
             return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
         }
 
@@ -110,26 +98,33 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(changingEntry), "what's my name? Heisenburg")
     }
     
+    func testPreCommitHook() {
+        
+        TestGroup.preCommitCalls = 0
+        
+        store.set(TestGroup.anyEntry, value: "new value")
+        XCTAssertEqual(TestGroup.preCommitCalls, 1)
+    }
+    
     func testPostCommitHook() {
         
-        AnyGroup.called = false
-        let anyEntry = Entry<AnyGroup, String?>(id: "any-entry", defaultValue: nil)
+        TestGroup.postCommitCalls = 0
         
-        store.set(anyEntry, value: "test")
-        XCTAssertTrue(AnyGroup.called)
+        store.set(TestGroup.anyEntry, value: "test")
+        XCTAssertEqual(TestGroup.postCommitCalls, 1)
     }
     
     func testGetterPerformance() {
         
         self.measureBlock {
-            self.store.get(TestGroup.AnyEntry)
+            self.store.get(TestGroup.anyEntry)
         }
     }
     
     func testSetterPerformance() {
         
         self.measureBlock {
-            self.store.set(TestGroup.AnyEntry, value: "more testing")
+            self.store.set(TestGroup.anyEntry, value: "more testing")
         }
     }
     

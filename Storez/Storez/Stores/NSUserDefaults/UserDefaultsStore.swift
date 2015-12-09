@@ -29,6 +29,8 @@ public final class UserDefaultsStore: Store {
     
     private func _set<E: EntryType>(entry: E, value: SerializableType?) {
         
+        E.GroupType.preCommitHook()
+        
         defaults.setObject(value, forKey: entry.key)
         defaults.synchronize()
         

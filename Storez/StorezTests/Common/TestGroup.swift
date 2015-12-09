@@ -13,7 +13,17 @@ struct TestGroup: Group {
     
     static let id = "testgroup"
     
-    static let AnyEntry = Entry<TestGroup, String?>(id: "any-entry", defaultValue: nil)
+    static let anyEntry = Entry<TestGroup, String?>(id: "any-entry", defaultValue: nil)
+    
+    static var preCommitCalls = 0
+    static func preCommitHook() {
+        preCommitCalls += 1
+    }
+    
+    static var postCommitCalls = 0
+    static func postCommitHook() {
+        postCommitCalls += 1
+    }
 }
 
 struct ChildGroup: Group {

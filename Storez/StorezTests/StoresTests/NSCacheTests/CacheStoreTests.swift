@@ -14,6 +14,12 @@ class CacheStoreTests: XCTestCase {
     
     let store = CacheStore()
     
+    override func setUp() {
+        super.setUp()
+        
+        store.clear()
+    }
+    
     func testAnyObjectType() {
         
         let date = NSDate(timeIntervalSinceReferenceDate: 100)
