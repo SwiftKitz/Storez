@@ -50,7 +50,7 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(dateEntry), date)
     }
     
-    func testNSCodingTypes() {
+    func testNSCodingConformingTypes() {
         
         let uuidEntry = Entry<TestGroup, NSUUID?>(id: "uuid", defaultValue: nil)
         let uuid = NSUUID()
@@ -60,7 +60,7 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(uuidEntry), uuid)
     }
     
-    func testPrimitiveStorage() {
+    func testPrimitiveTypes() {
         
         let value = 20.4
         let primitive = Entry<TestGroup, Double?>(id: "primitive", defaultValue: nil)
@@ -69,7 +69,7 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(primitive), value)
     }
     
-    func testStringStorage() {
+    func testStringType() {
         
         let text = Entry<TestGroup, String?>(id: "text", defaultValue: nil)
         let value = "testing-string-🇦🇪"
@@ -78,7 +78,7 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(text), value)
     }
     
-    func testCustomObjectStorage() {
+    func testCustomObjectType() {
         
         let value = CustomObject(
             title: "Sherlock Holmes",
