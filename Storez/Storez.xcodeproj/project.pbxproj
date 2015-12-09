@@ -25,6 +25,10 @@
 		82455EB31BF9A30000C33751 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455EA51BF9A30000C33751 /* Group.swift */; };
 		82455EB41BF9A30000C33751 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455EA51BF9A30000C33751 /* Group.swift */; };
 		82455EB51BF9A30000C33751 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82455EA51BF9A30000C33751 /* Group.swift */; };
+		824FB4B91C17B746007568BB /* CacheSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FB4B81C17B746007568BB /* CacheSerializable.swift */; };
+		824FB4BA1C17B746007568BB /* CacheSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FB4B81C17B746007568BB /* CacheSerializable.swift */; };
+		824FB4BB1C17B746007568BB /* CacheSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FB4B81C17B746007568BB /* CacheSerializable.swift */; };
+		824FB4BC1C17B746007568BB /* CacheSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FB4B81C17B746007568BB /* CacheSerializable.swift */; };
 		82642A0F1BEC6D2C00A86452 /* TestGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82642A0E1BEC6D2C00A86452 /* TestGroup.swift */; };
 		82642A131BEC9F7000A86452 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82642A121BEC9F7000A86452 /* CustomObject.swift */; };
 		826662F01BFEA1C500111AED /* EntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826662EF1BFEA1C500111AED /* EntryType.swift */; };
@@ -41,6 +45,10 @@
 		828C1CB71C17898D0027C73D /* GroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CB31C17898D0027C73D /* GroupTests.swift */; };
 		828C1CB81C17898D0027C73D /* GroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CB31C17898D0027C73D /* GroupTests.swift */; };
 		828C1CB91C17898D0027C73D /* GroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CB31C17898D0027C73D /* GroupTests.swift */; };
+		828C1CBC1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
+		828C1CBD1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
+		828C1CBE1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
+		828C1CBF1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
 		82D4FE8F1BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
 		82D4FE901BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
 		82D4FE911BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
@@ -94,6 +102,7 @@
 		82455EA21BF9A30000C33751 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		82455EA31BF9A30000C33751 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		82455EA51BF9A30000C33751 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		824FB4B81C17B746007568BB /* CacheSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSerializable.swift; sourceTree = "<group>"; };
 		82642A0E1BEC6D2C00A86452 /* TestGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGroup.swift; sourceTree = "<group>"; };
 		82642A121BEC9F7000A86452 /* CustomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomObject.swift; sourceTree = "<group>"; };
 		826662EF1BFEA1C500111AED /* EntryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryType.swift; sourceTree = "<group>"; };
@@ -106,6 +115,7 @@
 		828C1CAD1C17895E0027C73D /* UserDefaultStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultStoreTests.swift; sourceTree = "<group>"; };
 		828C1CB21C17898D0027C73D /* EntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryTests.swift; sourceTree = "<group>"; };
 		828C1CB31C17898D0027C73D /* GroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTests.swift; sourceTree = "<group>"; };
+		828C1CBB1C178E680027C73D /* CacheStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
 		82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		82D4FE8E1BFD65AF0077D392 /* UserDefaultsSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsSerializable.swift; sourceTree = "<group>"; };
 		82D4FE971BFD74CC0077D392 /* UserDefaultsConvertible+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaultsConvertible+Swift.swift"; sourceTree = "<group>"; };
@@ -258,9 +268,19 @@
 			path = EntityTests;
 			sourceTree = "<group>";
 		};
+		828C1CBA1C178E390027C73D /* NSCache */ = {
+			isa = PBXGroup;
+			children = (
+				828C1CBB1C178E680027C73D /* CacheStore.swift */,
+				824FB4B81C17B746007568BB /* CacheSerializable.swift */,
+			);
+			path = NSCache;
+			sourceTree = "<group>";
+		};
 		82D4FE6D1BFD49000077D392 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				828C1CBA1C178E390027C73D /* NSCache */,
 				82D4FE8C1BFD65950077D392 /* NSUserDefaults */,
 			);
 			path = Stores;
@@ -555,10 +575,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				826662F21BFEA1C500111AED /* EntryType.swift in Sources */,
+				828C1CBE1C178E680027C73D /* CacheStore.swift in Sources */,
 				82D4FE951BFD65AF0077D392 /* UserDefaultsSerializable.swift in Sources */,
 				82455EAC1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE911BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB41BF9A30000C33751 /* Group.swift in Sources */,
+				824FB4BB1C17B746007568BB /* CacheSerializable.swift in Sources */,
 				82455EA81BF9A30000C33751 /* Store.swift in Sources */,
 				82D4FE9F1BFD75170077D392 /* UserDefaultsConvertible.swift in Sources */,
 				82D4FEA41BFD93560077D392 /* UserDefaultsConvertible+Foundation.swift in Sources */,
@@ -583,10 +605,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				826662F11BFEA1C500111AED /* EntryType.swift in Sources */,
+				828C1CBD1C178E680027C73D /* CacheStore.swift in Sources */,
 				82D4FE941BFD65AF0077D392 /* UserDefaultsSerializable.swift in Sources */,
 				82455EAB1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE901BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB31BF9A30000C33751 /* Group.swift in Sources */,
+				824FB4BA1C17B746007568BB /* CacheSerializable.swift in Sources */,
 				82455EA71BF9A30000C33751 /* Store.swift in Sources */,
 				82D4FE9E1BFD75170077D392 /* UserDefaultsConvertible.swift in Sources */,
 				82D4FEA31BFD93560077D392 /* UserDefaultsConvertible+Foundation.swift in Sources */,
@@ -599,10 +623,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				826662F01BFEA1C500111AED /* EntryType.swift in Sources */,
+				828C1CBC1C178E680027C73D /* CacheStore.swift in Sources */,
 				82D4FE931BFD65AF0077D392 /* UserDefaultsSerializable.swift in Sources */,
 				82455EAA1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE8F1BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB21BF9A30000C33751 /* Group.swift in Sources */,
+				824FB4B91C17B746007568BB /* CacheSerializable.swift in Sources */,
 				82455EA61BF9A30000C33751 /* Store.swift in Sources */,
 				82D4FE9D1BFD75170077D392 /* UserDefaultsConvertible.swift in Sources */,
 				82D4FEA21BFD93560077D392 /* UserDefaultsConvertible+Foundation.swift in Sources */,
@@ -627,10 +653,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				826662F31BFEA1C500111AED /* EntryType.swift in Sources */,
+				828C1CBF1C178E680027C73D /* CacheStore.swift in Sources */,
 				82D4FE961BFD65AF0077D392 /* UserDefaultsSerializable.swift in Sources */,
 				82455EAD1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE921BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB51BF9A30000C33751 /* Group.swift in Sources */,
+				824FB4BC1C17B746007568BB /* CacheSerializable.swift in Sources */,
 				82455EA91BF9A30000C33751 /* Store.swift in Sources */,
 				82D4FEA01BFD75170077D392 /* UserDefaultsConvertible.swift in Sources */,
 				82D4FEA51BFD93560077D392 /* UserDefaultsConvertible+Foundation.swift in Sources */,
