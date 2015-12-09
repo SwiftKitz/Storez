@@ -35,14 +35,14 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testUserDefaultValueTypes() {
         
-        let arrayEntry = Entry<TestGroup, NSArray>(id: "array", defaultValue: [1])
+        let arrayEntry = Entry<GlobalGroup, NSArray>(id: "array", defaultValue: [1])
         let array: NSArray = [1, 2, 3]
         
         XCTAssertEqual(store.get(arrayEntry), [1])
         store.set(arrayEntry, value: array)
         XCTAssertEqual(store.get(arrayEntry), array)
         
-        let dateEntry = Entry<TestGroup, NSDate?>(id: "date", defaultValue: nil)
+        let dateEntry = Entry<GlobalGroup, NSDate?>(id: "date", defaultValue: nil)
         let date = NSDate(timeIntervalSinceReferenceDate: 500)
         
         XCTAssertEqual(store.get(dateEntry), nil)
@@ -52,7 +52,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testNSCodingConformingTypes() {
         
-        let uuidEntry = Entry<TestGroup, NSUUID?>(id: "uuid", defaultValue: nil)
+        let uuidEntry = Entry<GlobalGroup, NSUUID?>(id: "uuid", defaultValue: nil)
         let uuid = NSUUID()
         
         XCTAssertEqual(store.get(uuidEntry), nil)
@@ -63,7 +63,7 @@ class UserDefaultsStoreTests: XCTestCase {
     func testPrimitiveTypes() {
         
         let value = 20.4
-        let primitive = Entry<TestGroup, Double?>(id: "primitive", defaultValue: nil)
+        let primitive = Entry<GlobalGroup, Double?>(id: "primitive", defaultValue: nil)
         
         store.set(primitive, value: value)
         XCTAssertEqual(store.get(primitive), value)
@@ -71,7 +71,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testStringType() {
         
-        let text = Entry<TestGroup, String?>(id: "text", defaultValue: nil)
+        let text = Entry<GlobalGroup, String?>(id: "text", defaultValue: nil)
         let value = "testing-string-🇦🇪"
         
         store.set(text, value: value)
@@ -85,7 +85,7 @@ class UserDefaultsStoreTests: XCTestCase {
             year: 1886
         )
         
-        let customEntry = Entry<TestGroup, CustomObject?>(id: "custom-object", defaultValue: nil)
+        let customEntry = Entry<GlobalGroup, CustomObject?>(id: "custom-object", defaultValue: nil)
         
         store.set(customEntry, value: value)
         XCTAssertEqual(store.get(customEntry), value)
@@ -94,7 +94,7 @@ class UserDefaultsStoreTests: XCTestCase {
     func testDefaultValueIsResolved() {
         
         let defaultValue = "default-value"
-        let defaultProvider = Entry<TestGroup, String>(id: "default-provider", defaultValue: defaultValue)
+        let defaultProvider = Entry<GlobalGroup, String>(id: "default-provider", defaultValue: defaultValue)
         
         let value = store.get(defaultProvider)
         XCTAssertEqual(value, defaultValue)
