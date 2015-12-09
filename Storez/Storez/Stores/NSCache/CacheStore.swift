@@ -47,14 +47,11 @@ public final class CacheStore: Store {
     
     private func _get<V: CacheConvertible>(key: String) -> V? {
         
-        let storedValue: V.CacheType? = _get(key)
-        var resultValue: V? = nil
-        
-        if let storedValue = storedValue {
-            resultValue = V.decode(cacheValue: storedValue)
+        if let storedValue: V.CacheType = _get(key) {
+            return V.decode(cacheValue: storedValue)
         }
         
-        return resultValue
+        return nil
     }
     
     public func get<E: EntryType where E.ValueType: CacheConvertible>(entry: E) -> E.ValueType {

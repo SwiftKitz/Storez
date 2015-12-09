@@ -54,14 +54,11 @@ public final class UserDefaultsStore: Store {
 
     private func _get<V: UserDefaultsConvertible>(key: String) -> V? {
         
-        let serializedValue: V.UserDefaultsType? = _get(key)
-        var resultValue: V? = nil
-        
-        if let serializedValue = serializedValue {
-            resultValue = V.decode(userDefaultsValue: serializedValue)
+        if let serializedValue: V.UserDefaultsType = _get(key) {
+            return V.decode(userDefaultsValue: serializedValue)
         }
         
-        return resultValue
+        return nil
     }
     
     public func get<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
