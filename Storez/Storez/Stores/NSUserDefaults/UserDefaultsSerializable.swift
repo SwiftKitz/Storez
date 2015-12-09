@@ -10,9 +10,11 @@ import Foundation
 
 
 /** Types conforming to this protocol are supported by
-    NSUserDefaults.
+    NSUserDefaults. They all conform to NSCoding, so we
+    add that to avoid ambiguity when calling the 
+    overloaded getters and setters
 */
-public protocol UserDefaultsSerializable {
+public protocol UserDefaultsSerializable: NSCoding {
     var anyObject: AnyObject { get }
 }
 

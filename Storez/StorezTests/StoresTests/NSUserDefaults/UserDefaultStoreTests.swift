@@ -50,6 +50,16 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(dateEntry), date)
     }
     
+    func testNSCodingTypes() {
+        
+        let uuidEntry = Entry<TestGroup, NSUUID?>(id: "uuid", defaultValue: nil)
+        let uuid = NSUUID()
+        
+        XCTAssertEqual(store.get(uuidEntry), nil)
+        store.set(uuidEntry, value: uuid)
+        XCTAssertEqual(store.get(uuidEntry), uuid)
+    }
+    
     func testPrimitiveStorage() {
         
         let value = 20.4

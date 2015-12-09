@@ -11,16 +11,16 @@ import Foundation
 
 // FIXME: Protocol extensions can't have inheritence clause
 
-public extension NSCoding {
+extension NSCoding {
     
-    public var encode: NSData {
+    var encode: NSData {
         return NSKeyedArchiver.archivedDataWithRootObject(self)
     }
 }
 
-public extension NSData {
+extension NSData {
     
-    public func decode<T>() -> T? {
+    func decode<T>() -> T? {
         return NSKeyedUnarchiver.unarchiveObjectWithData(self) as? T
     }
 }

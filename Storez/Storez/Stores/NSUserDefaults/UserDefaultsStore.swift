@@ -73,7 +73,19 @@ public final class UserDefaultsStore: Store {
             resultValue = V.decode(serializedValue)
         }
         
-        return resultValue
+        return resultValue ?? entry.defaultValue
+    }
+    
+    public func get<E: EntryType where E.ValueType: NSCoding>(entry: E) -> E.ValueType {
+        
+        let data: NSData? = _get(entry.key)
+        return data?.decode() ?? entry.defaultValue
+    }
+    
+    public func get<E: EntryType, V: NSCoding where E.ValueType == V?>(entry: E) -> V? {
+
+        let data: NSData? = _get(entry.key)
+        return data?.decode() ?? entry.defaultValue
     }
     
     public func set<E: EntryType where E.ValueType: SerializableType>(entry: E, value: E.ValueType) {
@@ -95,6 +107,18 @@ public final class UserDefaultsStore: Store {
     }
     
     public func set<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E, value: V?) {
+        
+        let newValue = entry.willChange(value)
+        _set(entry, value: newValue?.encode)
+    }
+    
+    public func set<E: EntryType where E.ValueType: NSCoding>(entry: E, value: E.ValueType) {
+        
+        let newValue = entry.willChange(value)
+        _set(entry, value: newValue.encode)
+    }
+    
+    public func set<E: EntryType, V: NSCoding where E.ValueType == V?>(entry: E, value: V?) {
         
         let newValue = entry.willChange(value)
         _set(entry, value: newValue?.encode)

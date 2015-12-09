@@ -11,7 +11,6 @@ import Foundation
 /**
     Adding support to Swift types
 */
-
 extension Int: UserDefaultsConvertible {
     
     public typealias UnderlyingType = NSNumber
