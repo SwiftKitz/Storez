@@ -52,27 +52,27 @@ public final class UserDefaultsStore: Store {
         return _get(entry.key) ?? entry.defaultValue
     }
 
-    public func get<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
+    private func _get<V: UserDefaultsConvertible>(key: String) -> V? {
         
-        let serializedValue: E.ValueType.UserDefaultsType? = _get(entry.key)
-        var resultValue: E.ValueType? = nil
-        
-        if let serializedValue = serializedValue {
-            resultValue = E.ValueType.decode(userDefaultsValue: serializedValue)
-        }
-        
-        return resultValue ?? entry.defaultValue
-    }
-    
-    public func get<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E) -> V? {
-        
-        let serializedValue: V.UserDefaultsType? = _get(entry.key)
+        let serializedValue: V.UserDefaultsType? = _get(key)
         var resultValue: V? = nil
         
         if let serializedValue = serializedValue {
             resultValue = V.decode(userDefaultsValue: serializedValue)
         }
         
+        return resultValue
+    }
+    
+    public func get<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
+        
+        let resultValue: E.ValueType? = _get(entry.key)
+        return resultValue ?? entry.defaultValue
+    }
+    
+    public func get<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E) -> V? {
+        
+        let resultValue: V? = _get(entry.key)
         return resultValue ?? entry.defaultValue
     }
     
