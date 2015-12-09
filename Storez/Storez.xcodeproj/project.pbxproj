@@ -49,6 +49,14 @@
 		828C1CBD1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
 		828C1CBE1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
 		828C1CBF1C178E680027C73D /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828C1CBB1C178E680027C73D /* CacheStore.swift */; };
+		829DA9C11C18A52600E6623C /* CacheConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C01C18A52600E6623C /* CacheConvertible.swift */; };
+		829DA9C21C18A52600E6623C /* CacheConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C01C18A52600E6623C /* CacheConvertible.swift */; };
+		829DA9C31C18A52600E6623C /* CacheConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C01C18A52600E6623C /* CacheConvertible.swift */; };
+		829DA9C41C18A52600E6623C /* CacheConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C01C18A52600E6623C /* CacheConvertible.swift */; };
+		829DA9C61C18A7AB00E6623C /* ConvertibleValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */; };
+		829DA9C71C18A7AB00E6623C /* ConvertibleValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */; };
+		829DA9C81C18A7AB00E6623C /* ConvertibleValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */; };
+		829DA9C91C18A7AB00E6623C /* ConvertibleValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */; };
 		82D4FE8F1BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
 		82D4FE901BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
 		82D4FE911BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */; };
@@ -116,6 +124,8 @@
 		828C1CB21C17898D0027C73D /* EntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryTests.swift; sourceTree = "<group>"; };
 		828C1CB31C17898D0027C73D /* GroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTests.swift; sourceTree = "<group>"; };
 		828C1CBB1C178E680027C73D /* CacheStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
+		829DA9C01C18A52600E6623C /* CacheConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheConvertible.swift; sourceTree = "<group>"; };
+		829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertibleValue.swift; sourceTree = "<group>"; };
 		82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		82D4FE8E1BFD65AF0077D392 /* UserDefaultsSupportedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsSupportedType.swift; sourceTree = "<group>"; };
 		82D4FE971BFD74CC0077D392 /* UserDefaultsConvertible+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaultsConvertible+Swift.swift"; sourceTree = "<group>"; };
@@ -186,6 +196,7 @@
 				826662EF1BFEA1C500111AED /* EntryType.swift */,
 				82455EA31BF9A30000C33751 /* Entry.swift */,
 				82455EA51BF9A30000C33751 /* Group.swift */,
+				829DA9C51C18A7AB00E6623C /* ConvertibleValue.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -273,6 +284,7 @@
 			children = (
 				828C1CBB1C178E680027C73D /* CacheStore.swift */,
 				824FB4B81C17B746007568BB /* CacheSupportedType.swift */,
+				829DA9C01C18A52600E6623C /* CacheConvertible.swift */,
 			);
 			path = NSCache;
 			sourceTree = "<group>";
@@ -576,7 +588,9 @@
 			files = (
 				826662F21BFEA1C500111AED /* EntryType.swift in Sources */,
 				828C1CBE1C178E680027C73D /* CacheStore.swift in Sources */,
+				829DA9C31C18A52600E6623C /* CacheConvertible.swift in Sources */,
 				82D4FE951BFD65AF0077D392 /* UserDefaultsSupportedType.swift in Sources */,
+				829DA9C81C18A7AB00E6623C /* ConvertibleValue.swift in Sources */,
 				82455EAC1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE911BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB41BF9A30000C33751 /* Group.swift in Sources */,
@@ -606,7 +620,9 @@
 			files = (
 				826662F11BFEA1C500111AED /* EntryType.swift in Sources */,
 				828C1CBD1C178E680027C73D /* CacheStore.swift in Sources */,
+				829DA9C21C18A52600E6623C /* CacheConvertible.swift in Sources */,
 				82D4FE941BFD65AF0077D392 /* UserDefaultsSupportedType.swift in Sources */,
+				829DA9C71C18A7AB00E6623C /* ConvertibleValue.swift in Sources */,
 				82455EAB1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE901BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB31BF9A30000C33751 /* Group.swift in Sources */,
@@ -624,7 +640,9 @@
 			files = (
 				826662F01BFEA1C500111AED /* EntryType.swift in Sources */,
 				828C1CBC1C178E680027C73D /* CacheStore.swift in Sources */,
+				829DA9C11C18A52600E6623C /* CacheConvertible.swift in Sources */,
 				82D4FE931BFD65AF0077D392 /* UserDefaultsSupportedType.swift in Sources */,
+				829DA9C61C18A7AB00E6623C /* ConvertibleValue.swift in Sources */,
 				82455EAA1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE8F1BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB21BF9A30000C33751 /* Group.swift in Sources */,
@@ -654,7 +672,9 @@
 			files = (
 				826662F31BFEA1C500111AED /* EntryType.swift in Sources */,
 				828C1CBF1C178E680027C73D /* CacheStore.swift in Sources */,
+				829DA9C41C18A52600E6623C /* CacheConvertible.swift in Sources */,
 				82D4FE961BFD65AF0077D392 /* UserDefaultsSupportedType.swift in Sources */,
+				829DA9C91C18A7AB00E6623C /* ConvertibleValue.swift in Sources */,
 				82455EAD1BF9A30000C33751 /* Entry.swift in Sources */,
 				82D4FE921BFD65AF0077D392 /* UserDefaultsStore.swift in Sources */,
 				82455EB51BF9A30000C33751 /* Group.swift in Sources */,

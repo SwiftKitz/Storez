@@ -7,15 +7,9 @@
 //
 
 
-/** Other types can conform to this protocol to add  support.
-    It simply requires the class to convert to and from one of
-    the supported types.
+/** See ConvertibleValue for more information
 */
-public protocol UserDefaultsConvertible {
-
+public protocol UserDefaultsConvertible: ConvertibleValue {
     typealias UnderlyingType: UserDefaultsSupportedType
-    
-    static func decode(value: UnderlyingType) -> Self?
-    var encode: UnderlyingType? { get }
 }
 
