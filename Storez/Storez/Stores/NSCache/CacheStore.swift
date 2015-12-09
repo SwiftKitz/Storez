@@ -28,7 +28,7 @@ public final class CacheStore: Store {
     private func _set<E: EntryType>(entry: E, value: SerializableType?) {
         
         if let value = value {
-            cache.setObject(value.anyObject, forKey: entry.key)
+            cache.setObject(value, forKey: entry.key)
         }
         else {
             cache.removeObjectForKey(entry.key)

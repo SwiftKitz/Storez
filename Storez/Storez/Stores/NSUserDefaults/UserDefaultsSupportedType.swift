@@ -14,16 +14,7 @@ import Foundation
     add that to avoid ambiguity when calling the 
     overloaded getters and setters
 */
-public protocol UserDefaultsSupportedType: NSCoding {
-    var anyObject: AnyObject { get }
-}
-
-public extension UserDefaultsSupportedType where Self: AnyObject {
-    
-    var anyObject: AnyObject {
-        return self
-    }
-}
+public protocol UserDefaultsSupportedType: AnyObject, NSCoding {}
 
 // NSUserDefaults Supported Types
 // https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html

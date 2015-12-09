@@ -6,13 +6,4 @@
 //  Copyright © 2015 mazy. All rights reserved.
 //
 
-public protocol CacheSupportedType {
-    var anyObject: AnyObject { get }
-}
-
-public extension CacheSupportedType where Self: AnyObject {
-    
-    var anyObject: AnyObject {
-        return self
-    }
-}
+public protocol CacheSupportedType: AnyObject {}
