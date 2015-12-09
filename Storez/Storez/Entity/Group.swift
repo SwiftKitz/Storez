@@ -21,7 +21,7 @@ public struct GlobalNamespace: Namespace {
 */
 public protocol Group: Namespace {
     
-    typealias Parent: Namespace = GlobalNamespace
+    typealias parent: Namespace = GlobalNamespace
     
     static func preCommitHook()     /* Optional */
     static func postCommitHook()    /* Optional */
@@ -31,7 +31,7 @@ public extension Group {
 
     static var key: String {
         
-        return [Parent.id, id]
+        return [parent.id, id]
             .filter { !$0.isEmpty }
             .joinWithSeparator(":")
     }

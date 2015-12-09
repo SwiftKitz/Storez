@@ -18,7 +18,7 @@ class GroupTests: XCTestCase {
     
     func testNestedKeys() {
         
-        let expectedKey = [ChildGroup.Parent.key, ChildGroup.id].joinWithSeparator(":")
+        let expectedKey = [ChildGroup.parent.key, ChildGroup.id].joinWithSeparator(":")
         XCTAssertEqual(ChildGroup.key, expectedKey)
     }
 }

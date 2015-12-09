@@ -28,7 +28,7 @@ struct TestGroup: Group {
 
 struct ChildGroup: Group {
     
-    typealias Parent = TestGroup
+    typealias parent = TestGroup
     
     static let id = "child-group"
 }

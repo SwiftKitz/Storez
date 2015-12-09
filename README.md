@@ -36,7 +36,7 @@ kingdom.key // "animals:mammals"
 
 // Nesting
 struct Cats: Group {
-    typealias Parent = Animals
+    typealias parent = Animals
     static let id = "cats"
     
     // Groups also have pre and post commit hooks
