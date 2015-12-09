@@ -1,5 +1,5 @@
 //
-//  UserDefaultsSerializable.swift
+//  UserDefaultsSupportedType.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/6/15.
@@ -14,11 +14,11 @@ import Foundation
     add that to avoid ambiguity when calling the 
     overloaded getters and setters
 */
-public protocol UserDefaultsSerializable: NSCoding {
+public protocol UserDefaultsSupportedType: NSCoding {
     var anyObject: AnyObject { get }
 }
 
-public extension UserDefaultsSerializable where Self: AnyObject {
+public extension UserDefaultsSupportedType where Self: AnyObject {
     
     var anyObject: AnyObject {
         return self
@@ -27,11 +27,11 @@ public extension UserDefaultsSerializable where Self: AnyObject {
 
 // NSUserDefaults Supported Types
 // https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html
-extension NSArray: UserDefaultsSerializable {}
-extension NSDictionary: UserDefaultsSerializable {}
+extension NSArray: UserDefaultsSupportedType {}
+extension NSDictionary: UserDefaultsSupportedType {}
 
-extension NSDate: UserDefaultsSerializable {}
-extension NSData: UserDefaultsSerializable {}
-extension NSNumber: UserDefaultsSerializable {}
-extension NSString: UserDefaultsSerializable {}
+extension NSDate: UserDefaultsSupportedType {}
+extension NSData: UserDefaultsSupportedType {}
+extension NSNumber: UserDefaultsSupportedType {}
+extension NSString: UserDefaultsSupportedType {}
 

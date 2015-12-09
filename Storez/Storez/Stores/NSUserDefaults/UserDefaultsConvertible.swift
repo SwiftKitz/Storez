@@ -13,7 +13,7 @@
 */
 public protocol UserDefaultsConvertible {
 
-    typealias UnderlyingType: UserDefaultsSerializable
+    typealias UnderlyingType: UserDefaultsSupportedType
     
     static func decode(value: UnderlyingType) -> Self?
     var encode: UnderlyingType? { get }

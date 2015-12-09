@@ -11,7 +11,7 @@ import Foundation
 
 public final class CacheStore: Store {
     
-    public typealias SerializableType = CacheSerializable
+    public typealias SerializableType = CacheSupportedType
     
     public let cache = NSCache()
     

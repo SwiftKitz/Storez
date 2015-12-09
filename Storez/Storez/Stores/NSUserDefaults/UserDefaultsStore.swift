@@ -11,7 +11,7 @@ import Foundation
 
 public final class UserDefaultsStore: Store {
     
-    public typealias SerializableType = UserDefaultsSerializable
+    public typealias SerializableType = UserDefaultsSupportedType
     
     public let defaults: NSUserDefaults
     
