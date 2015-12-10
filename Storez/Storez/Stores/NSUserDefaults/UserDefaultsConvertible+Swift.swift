@@ -13,65 +13,55 @@ import Foundation
 */
 extension Int: UserDefaultsConvertible {
     
-    public typealias UserDefaultsType = NSNumber
-    
-    public static func decode(userDefaultsValue value: UserDefaultsType) -> Int? {
+    public static func decode(userDefaultsValue value: NSNumber) -> Int? {
         return value.integerValue
     }
     
-    public var encodeForUserDefaults: UserDefaultsType? {
+    public var encodeForUserDefaults: NSNumber? {
         return NSNumber(integer: self)
     }
 }
 
 extension Double: UserDefaultsConvertible {
     
-    public typealias UserDefaultsType = NSNumber
-    
-    public static func decode(userDefaultsValue value: UserDefaultsType) -> Double? {
+    public static func decode(userDefaultsValue value: NSNumber) -> Double? {
         return value.doubleValue
     }
     
-    public var encodeForUserDefaults: UserDefaultsType? {
+    public var encodeForUserDefaults: NSNumber? {
         return NSNumber(double: self)
     }
 }
 
 extension Bool: UserDefaultsConvertible {
     
-    public typealias UserDefaultsType = NSNumber
-    
-    public static func decode(userDefaultsValue value: UserDefaultsType) -> Bool? {
+    public static func decode(userDefaultsValue value: NSNumber) -> Bool? {
         return value.boolValue
     }
     
-    public var encodeForUserDefaults: UserDefaultsType? {
+    public var encodeForUserDefaults: NSNumber? {
         return NSNumber(bool: self)
     }
 }
 
 extension Float: UserDefaultsConvertible {
     
-    public typealias UserDefaultsType = NSNumber
-    
-    public static func decode(userDefaultsValue value: UserDefaultsType) -> Float? {
+    public static func decode(userDefaultsValue value: NSNumber) -> Float? {
         return value.floatValue
     }
     
-    public var encodeForUserDefaults: UserDefaultsType? {
+    public var encodeForUserDefaults: NSNumber? {
         return NSNumber(float: self)
     }
 }
 
 extension String: UserDefaultsConvertible {
-    
-    public typealias UserDefaultsType = NSString
-    
-    public static func decode(userDefaultsValue value: UserDefaultsType) -> String? {
+        
+    public static func decode(userDefaultsValue value: NSString) -> String? {
         return value as String
     }
     
-    public var encodeForUserDefaults: UserDefaultsType? {
+    public var encodeForUserDefaults: NSString? {
         return self as NSString
     }
 }

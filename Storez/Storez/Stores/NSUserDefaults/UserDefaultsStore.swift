@@ -9,9 +9,19 @@
 import Foundation
 
 
-public final class UserDefaultsStore: Store {
+protocol UserDefaultsAcceptedType {
     
-    public typealias SerializableType = UserDefaultsSupportedType
+    typealias ValueType
+    typealias SupportedType: UserDefaultsSupportedType
+    
+    var supportedType: UserDefaultsSupportedType? { get }
+    var value: ValueType? { get }
+    
+    init(storedValue: SupportedType?)
+    init(_ value: ValueType?)
+}
+
+public final class UserDefaultsStore: Store {
     
     public let defaults: NSUserDefaults
     
@@ -23,18 +33,44 @@ public final class UserDefaultsStore: Store {
     
     // MARK: - Private methods
     
-    private func _get<V: SerializableType>(key: String) -> V? {
-        return defaults.objectForKey(key) as? V
+    private func _read<E: EntryType, B: UserDefaultsAcceptedType>(entry: E) -> B? {
+        
+        let data = defaults.objectForKey(entry.key) as? NSData
+        return B(storedValue: data?.decode())
     }
     
-    private func _set<E: EntryType>(entry: E, value: SerializableType?) {
+    private func _write<E: EntryType>(entry: E, value: UserDefaultsSupportedType?) {
         
         E.GroupType.preCommitHook()
         
-        defaults.setObject(value, forKey: entry.key)
+        defaults.setObject(value?.encode, forKey: entry.key)
         defaults.synchronize()
         
         E.GroupType.postCommitHook()
+    }
+    
+    private func _set<E: EntryType, B: UserDefaultsAcceptedType where E.ValueType == B.ValueType>(entry: E, box: B) {
+        
+        let oldBox: B? = _read(entry)
+        let oldValue = oldBox?.value ?? entry.defaultValue
+        let newValue = entry.processChange(oldValue, newValue: box.value ?? entry.defaultValue)
+        let newBox = B(newValue)
+        
+        entry.willChange(oldValue, newValue: newValue)
+        _write(entry, value: newBox.supportedType)
+        entry.didChange(oldValue, newValue: newValue)
+    }
+    
+    private func _set<E: EntryType, B: UserDefaultsAcceptedType, V where E.ValueType == V?, V == B.ValueType>(entry: E, box: B) {
+        
+        let oldBox: B? = _read(entry)
+        let oldValue = oldBox?.value ?? entry.defaultValue
+        let newValue = entry.processChange(oldValue, newValue: box.value ?? entry.defaultValue)
+        let newBox = B(newValue)
+        
+        entry.willChange(oldValue, newValue: newValue)
+        _write(entry, value: newBox.supportedType)
+        entry.didChange(oldValue, newValue: newValue)
     }
     
     // MARK: - Public methods
@@ -46,80 +82,45 @@ public final class UserDefaultsStore: Store {
         defaults.synchronize()
     }
 
-    public func get<E: EntryType where E.ValueType: SerializableType>(entry: E) -> E.ValueType {
-        return _get(entry.key) ?? entry.defaultValue
-    }
-    
-    public func get<E: EntryType, V: SerializableType where E.ValueType == V?>(entry: E) -> V? {
-        return _get(entry.key) ?? entry.defaultValue
-    }
-
-    private func _get<V: UserDefaultsConvertible>(key: String) -> V? {
-        
-        if let serializedValue: V.UserDefaultsType = _get(key) {
-            return V.decode(userDefaultsValue: serializedValue)
-        }
-        
-        return nil
-    }
-    
     public func get<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
         
-        let resultValue: E.ValueType? = _get(entry.key)
-        return resultValue ?? entry.defaultValue
+        let box: UserDefaultsConvertibleBox<E.ValueType>? = _read(entry)
+        return box?.value ?? entry.defaultValue
     }
     
     public func get<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E) -> V? {
         
-        let resultValue: V? = _get(entry.key)
-        return resultValue ?? entry.defaultValue
+        let box: UserDefaultsConvertibleBox<V>? = _read(entry)
+        return box?.value ?? entry.defaultValue
     }
     
-    public func get<E: EntryType where E.ValueType: NSCoding>(entry: E) -> E.ValueType {
+    public func get<E: EntryType where E.ValueType: UserDefaultsSupportedType>(entry: E) -> E.ValueType {
         
-        let data: NSData? = _get(entry.key)
-        return data?.decode() ?? entry.defaultValue
+        let box: UserDefaultsSupportedTypeBox<E.ValueType>? = _read(entry)
+        return box?.value ?? entry.defaultValue
     }
     
     public func get<E: EntryType, V: NSCoding where E.ValueType == V?>(entry: E) -> V? {
 
-        let data: NSData? = _get(entry.key)
-        return data?.decode() ?? entry.defaultValue
-    }
-    
-    public func set<E: EntryType where E.ValueType: SerializableType>(entry: E, value: E.ValueType) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue)
-    }
-    
-    public func set<E: EntryType, V: SerializableType where E.ValueType == V?>(entry: E, value: V?) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue)
+        let box: UserDefaultsSupportedTypeBox<V>? = _read(entry)
+        return box?.value ?? entry.defaultValue
     }
     
     public func set<E: EntryType where E.ValueType: UserDefaultsConvertible>(entry: E, value: E.ValueType) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue.encodeForUserDefaults)
+        _set(entry, box: UserDefaultsConvertibleBox(value))
     }
     
     public func set<E: EntryType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E, value: V?) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue?.encodeForUserDefaults)
+        _set(entry, box: UserDefaultsConvertibleBox(value))
     }
     
     public func set<E: EntryType where E.ValueType: NSCoding>(entry: E, value: E.ValueType) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue.encode)
+        _set(entry, box: UserDefaultsSupportedTypeBox(value))
     }
     
     public func set<E: EntryType, V: NSCoding where E.ValueType == V?>(entry: E, value: V?) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue?.encode)
+        _set(entry, box: UserDefaultsSupportedTypeBox(value))
     }
 }
+
+

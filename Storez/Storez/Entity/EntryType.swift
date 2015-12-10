@@ -17,5 +17,15 @@ public protocol EntryType {
     var key: String { get }
     var defaultValue: ValueType { get }
     
-    func willChange(newValue: ValueType) -> ValueType
+    /* optional */
+    func willChange(oldValue: ValueType, newValue: ValueType)
+    func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType
+    func didChange(oldValue: ValueType, newValue: ValueType)
+}
+
+public extension EntryType {
+    
+    func willChange(oldValue: ValueType, newValue: ValueType) {}
+    func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType { return newValue }
+    func didChange(oldValue: ValueType, newValue: ValueType) {}
 }

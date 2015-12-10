@@ -9,20 +9,25 @@
 import Foundation
 
 
-/** Types conforming to this protocol are supported by
-    NSUserDefaults. They all conform to NSCoding, so we
-    add that to avoid ambiguity when calling the 
-    overloaded getters and setters
+/** To reduce complexity, we simply allow all types that
+    can convert using NSCoding
 */
-public protocol UserDefaultsSupportedType: AnyObject, NSCoding {}
+public typealias UserDefaultsSupportedType = NSCoding
 
-// NSUserDefaults Supported Types
-// https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html
-extension NSArray: UserDefaultsSupportedType {}
-extension NSDictionary: UserDefaultsSupportedType {}
 
-extension NSDate: UserDefaultsSupportedType {}
-extension NSData: UserDefaultsSupportedType {}
-extension NSNumber: UserDefaultsSupportedType {}
-extension NSString: UserDefaultsSupportedType {}
-
+struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaultsAcceptedType {
+    
+    let value: T?
+    
+    var supportedType: UserDefaultsSupportedType? {
+        return value
+    }
+    
+    init(storedValue: T?) {
+        value = storedValue
+    }
+    
+    init(_ value: T?) {
+        self.value = value
+    }
+}

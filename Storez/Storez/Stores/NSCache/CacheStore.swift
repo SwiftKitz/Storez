@@ -63,26 +63,18 @@ public final class CacheStore: Store {
     }
     
     public func set<E: EntryType where E.ValueType: SerializableType>(entry: E, value: E.ValueType) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue)
+        _set(entry, value: value)
     }
     
     public func set<E: EntryType, V: SerializableType where E.ValueType == V?>(entry: E, value: V?) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue)
+        _set(entry, value: value)
     }
     
     public func set<E: EntryType where E.ValueType: CacheConvertible>(entry: E, value: E.ValueType) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue.encodeForCache)
+        _set(entry, value: value.encodeForCache)
     }
     
     public func set<E: EntryType, V: CacheConvertible where E.ValueType == V?>(entry: E, value: V?) {
-        
-        let newValue = entry.willChange(value)
-        _set(entry, value: newValue?.encodeForCache)
+        _set(entry, value: value?.encodeForCache)
     }
 }

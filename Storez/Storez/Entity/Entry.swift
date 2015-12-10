@@ -36,7 +36,7 @@ public struct Entry<G: Group, V>: EntryType {
         self.changeBlock = changeBlock
     }
     
-    public func willChange(newValue: ValueType) -> ValueType {
+    public func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType {
         return changeBlock?(newValue) ?? newValue
     }
 }

@@ -67,13 +67,11 @@ struct CustomObject {
 extension CustomObject: UserDefaultsConvertible {
     
     // We want to serialize this struct as NSString
-    typealias UnderlyingType = NSString
-    
-    static func decode(value: UnderlyingType) -> CustomObject? {
+    static func decode(userDefaultsValue value: NSString) -> CustomObject? {
         return self.init(strings: value.componentsSeparatedByString(";"))
     }
     
-    var encode: UnderlyingType? {
+    var encodeForUserDefaults: NSString? {
         return strings.joinWithSeparator(";")
     }
 }
@@ -105,9 +103,8 @@ struct MyEntry<G: Group, V>: EntryType {
     var key: String
     var defaultValue: ValueType
     
-    func willChange(newValue: ValueType) -> ValueType {
+    func didChange(oldValue: ValueType, newValue: ValueType) {
         NSNotificationCenter.defaultCenter().postNotificationName(key, object: nil)
-        return newValue
     }
 }
 

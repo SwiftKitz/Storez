@@ -19,9 +19,17 @@ Customize the persistence store, the `EntryType` class, post-commit actions .. M
 In case you just want to use stuff, the framework is shipped with pre-configured basic set of classes that you can just use.
 
 + __Portability, Check!:__<br />
-If you're looking to share code between you app and extensions, watchkit, apple watch, you're covered! The library ships with `NSUserDefaults` store, just set your shared container identifier as the suite name.
+If you're looking to share code between you app and extensions, watchkit, apple watch, you're covered! You can use the `NSUserDefaults` store, just set your shared container identifier as the suite name.
 
 ## Features
+
+__Available Stores__
+
+| Store | Backend |
+|-------|---------|
+| `UserDefaultsStore` | `NSUserDefaults` |
+| `CacheStore` | `NSCache` |
+|--------------|-----------|
 
 __Type-safe, store-agnostic, nestable Entry definitions__
 
@@ -40,9 +48,8 @@ struct Cats: Group {
     static let id = "cats"
     
     // Groups also have pre and post commit hooks
-    func postCommitHook() {
-        // do something when values change
-    }
+    func preCommitHook() { /* custom code */ }
+    func postCommitHook() { /* custom code */ }
 }
 
 let cat = Entry<Cats, Void?>(id: "lion", defaultValue: nil)
@@ -52,7 +59,7 @@ cat.key     // "animals:cats:lion"
 __Initialize the store you want__
 
 ```swift
-// Currently, only UserDefaultsStore is implemented
+// Use UserDefaultsStore for this example
 let store = UserDefaultsStore(suite: "io.kitz.testing")
 let entry = Entry<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
 
@@ -90,13 +97,11 @@ struct CustomObject {
 extension CustomObject: UserDefaultsConvertible {
     
     // We want to serialize this struct as NSString
-    typealias UnderlyingType = NSString
-    
-    static func decode(value: UnderlyingType) -> CustomObject? {
+    static func decode(userDefaultsValue value: NSString) -> CustomObject? {
         return self.init(strings: value.componentsSeparatedByString(";"))
     }
     
-    var encode: UnderlyingType? {
+    var encodeForUserDefaults: NSString? {
         return strings.joinWithSeparator(";")
     }
 }
@@ -130,9 +135,8 @@ struct MyEntry<G: Group, V>: EntryType {
     var key: String
     var defaultValue: ValueType
     
-    func willChange(newValue: ValueType) -> ValueType {
+    func didChange(oldValue: ValueType, newValue: ValueType) {
         NSNotificationCenter.defaultCenter().postNotificationName(key, object: nil)
-        return newValue
     }
 }
 ```
