@@ -52,4 +52,21 @@ class CacheStoreTests: XCTestCase {
         store.set(nonnullKey, value: "blah")
         XCTAssertEqual(store.get(nonnullKey), "blah")
     }
+    
+    func testCustomObject() {
+        
+        let object = CustomObject(title: "custom", year: 1993)
+        
+        let nullableKey = Key<GlobalGroup, CustomObject?>(id: "nullable-custom", defaultValue: nil)
+        
+        XCTAssertEqual(store.get(nullableKey), nil)
+        store.set(nullableKey, value: object)
+        XCTAssertEqual(store.get(nullableKey), object)
+        
+        let nonnullKey = Key<GlobalGroup, CustomObject>(id: "nonnull-custom", defaultValue: CustomObject())
+        
+        XCTAssertEqual(store.get(nonnullKey), CustomObject())
+        store.set(nonnullKey, value: object)
+        XCTAssertEqual(store.get(nonnullKey), object)
+    }
 }

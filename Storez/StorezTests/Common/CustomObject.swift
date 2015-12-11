@@ -14,6 +14,18 @@ struct CustomObject {
     
     let title: String
     let year: Int
+    
+    init() {
+        
+        title = ""
+        year = 0
+    }
+    
+    init(title: String, year: Int) {
+        
+        self.title = title
+        self.year = year
+    }
 }
 
 extension CustomObject: Equatable {}
@@ -25,9 +37,7 @@ func ==(lhs: CustomObject, rhs: CustomObject) -> Bool {
 
 extension CustomObject: UserDefaultsConvertible {
     
-    typealias UserDefaultsType = NSDictionary
-
-    static func decode(userDefaultsValue value: UserDefaultsType) -> CustomObject? {
+    static func decode(userDefaultsValue value: NSDictionary) -> CustomObject? {
         
         return CustomObject(
             title: value["title"] as! String,
@@ -35,10 +45,21 @@ extension CustomObject: UserDefaultsConvertible {
         )
     }
     
-    var encodeForUserDefaults: UserDefaultsType? {
+    var encodeForUserDefaults: NSDictionary? {
         return [
             "title": title,
             "year": year,
         ]
+    }
+}
+
+extension CustomObject: CacheConvertible {
+    
+    static func decode(cacheValue value: AnyObject) -> CustomObject? {
+        return decode(userDefaultsValue: value as! NSDictionary)
+    }
+    
+    var encodeForCache: AnyObject? {
+        return encodeForUserDefaults
     }
 }
