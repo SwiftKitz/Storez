@@ -20,25 +20,36 @@ class CacheStoreTests: XCTestCase {
         store.clear()
     }
     
-    func testAnyObjectType() {
+    func testCacheType() {
         
         let date = NSDate(timeIntervalSinceReferenceDate: 100)
-        let defaultDate = NSDate(timeIntervalSinceReferenceDate: 0)
-        let entry = Entry<GlobalGroup, NSDate>(id: "date", defaultValue: defaultDate)
         
-        XCTAssertEqual(store.get(entry), defaultDate)
-        store.set(entry, value: date)
-        XCTAssertEqual(store.get(entry), date)
+        let nullableEntry = Entry<GlobalGroup, NSDate?>(id: "nullable-date", defaultValue: nil)
+        
+        XCTAssertEqual(store.get(nullableEntry), nil)
+        store.set(nullableEntry, value: date)
+        XCTAssertEqual(store.get(nullableEntry), date)
+        
+        let defaultDate = NSDate(timeIntervalSinceReferenceDate: 0)
+        let nonnullEntry = Entry<GlobalGroup, NSDate>(id: "nonnull-date", defaultValue: defaultDate)
+        
+        XCTAssertEqual(store.get(nonnullEntry), defaultDate)
+        store.set(nonnullEntry, value: date)
+        XCTAssertEqual(store.get(nonnullEntry), date)
     }
     
     func testSwiftType() {
         
-        let entry = Entry<GlobalGroup, String?>(id: "string", defaultValue: nil)
+        let nullableEntry = Entry<GlobalGroup, String?>(id: "nullable-string", defaultValue: nil)
         
-        XCTAssertEqual(store.get(entry), nil)
-        store.set(entry, value: "test")
-        XCTAssertEqual(store.get(entry), "test")
+        XCTAssertEqual(store.get(nullableEntry), nil)
+        store.set(nullableEntry, value: "test")
+        XCTAssertEqual(store.get(nullableEntry), "test")
+        
+        let nonnullEntry = Entry<GlobalGroup, String>(id: "nonnull-string", defaultValue: "string")
+        
+        XCTAssertEqual(store.get(nonnullEntry), "string")
+        store.set(nonnullEntry, value: "blah")
+        XCTAssertEqual(store.get(nonnullEntry), "blah")
     }
-    
-    
 }

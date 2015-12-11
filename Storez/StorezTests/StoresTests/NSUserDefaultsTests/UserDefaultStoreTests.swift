@@ -53,15 +53,17 @@ class UserDefaultsStoreTests: XCTestCase {
         let value = 20.4
         let primitive = Entry<GlobalGroup, Double?>(id: "primitive", defaultValue: nil)
         
+        XCTAssertEqual(store.get(primitive), nil)
         store.set(primitive, value: value)
         XCTAssertEqual(store.get(primitive), value)
     }
     
     func testStringType() {
         
-        let text = Entry<GlobalGroup, String?>(id: "text", defaultValue: nil)
+        let text = Entry<GlobalGroup, String>(id: "text", defaultValue: "default")
         let value = "testing-string-🇦🇪"
         
+        XCTAssertEqual(store.get(text), "default")
         store.set(text, value: value)
         XCTAssertEqual(store.get(text), value)
     }
@@ -94,8 +96,8 @@ class UserDefaultsStoreTests: XCTestCase {
             return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
         }
 
-        store.set(changingEntry, value: "what's my name?")
-        XCTAssertEqual(store.get(changingEntry), "what's my name? Heisenburg")
+        store.set(changingEntry, value: "say my name!")
+        XCTAssertEqual(store.get(changingEntry), "say my name! Heisenburg")
     }
     
     func testPreCommitHook() {
