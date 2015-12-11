@@ -13,7 +13,7 @@ struct TestGroup: Group {
     
     static let id = "testgroup"
     
-    static let anyEntry = Entry<TestGroup, String?>(id: "any-entry", defaultValue: nil)
+    static let anyKey = Key<TestGroup, String?>(id: "any-entry", defaultValue: nil)
     
     static var preCommitCalls = 0
     static func preCommitHook() {

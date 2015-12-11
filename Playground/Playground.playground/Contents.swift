@@ -7,14 +7,14 @@ import Storez
 //: __NOTE:__ This is an OSX playground in order to test NSUserDefaults
 
 //: ## Features
-//: Type-safe, store-agnostic, nestable Entry definitions
+//: Type-safe, store-agnostic, nestable Key definitions
 
 // Entries must belong to a "group", for namespacing
 struct Animals: Group {
     static let id = "animals"
 }
 
-let kingdom = Entry<Animals, Void?>(id: "mammals", defaultValue: nil)
+let kingdom = Key<Animals, Void?>(id: "mammals", defaultValue: nil)
 kingdom.key // "animals:mammals"
 
 // Nesting
@@ -28,14 +28,14 @@ struct Cats: Group {
     }
 }
 
-let cat = Entry<Cats, Void?>(id: "lion", defaultValue: nil)
+let cat = Key<Cats, Void?>(id: "lion", defaultValue: nil)
 cat.key     // "animals:cats:lion"
 
 //: Initialize the store you want
 
 // Currently, only UserDefaultsStore is implemented
 let store = UserDefaultsStore(suite: "io.kitz.testing")
-let entry = Entry<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
+let entry = Key<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
 
 // With three simple functions
 store.set(entry, value: 8)
@@ -44,12 +44,12 @@ store.clear() // Start fresh every time for testing
 
 //: Optionality is honored throughout
 
-let nullable = Entry<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
+let nullable = Key<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
 store.get(nullable)?.isEmpty   // nil
 store.set(nullable, value: "")
 store.get(nullable)?.isEmpty   // true
 
-let nonnull = Entry<GlobalGroup, String>(id: "nonnull", defaultValue: "!")
+let nonnull = Key<GlobalGroup, String>(id: "nonnull", defaultValue: "!")
 store.get(nonnull).isEmpty  // false
 store.set(nonnull, value: "")
 store.get(nonnull).isEmpty  // true
@@ -82,7 +82,7 @@ let customObject = CustomObject(
 )
 
 // let's add a processing block this time
-let CustomValue = Entry<GlobalGroup, CustomObject?>(id: "custom", defaultValue: nil) {
+let CustomValue = Key<GlobalGroup, CustomObject?>(id: "custom", defaultValue: nil) {
     
     var processedValue = $0
     processedValue?.strings.append("blank!")
@@ -92,10 +92,10 @@ let CustomValue = Entry<GlobalGroup, CustomObject?>(id: "custom", defaultValue: 
 store.set(CustomValue, value: customObject)
 store.get(CustomValue)?.strings.joinWithSeparator(" ") // fill in the blank!
 
-//: Make your own `EntryType`
+//: Make your own `KeyType`
 
 // For example, make an entry that emits NSNotifications
-struct MyEntry<G: Group, V>: EntryType {
+struct MyKey<G: Group, V>: KeyType {
     
     typealias GroupType = G
     typealias ValueType = V

@@ -25,7 +25,7 @@ public final class CacheStore: Store {
         return cache.objectForKey(key) as? V
     }
     
-    private func _set<E: EntryType>(entry: E, value: SerializableType?) {
+    private func _set<E: KeyType>(entry: E, value: SerializableType?) {
         
         if let value = value {
             cache.setObject(value, forKey: entry.key)
@@ -37,11 +37,11 @@ public final class CacheStore: Store {
         E.GroupType.postCommitHook()
     }
     
-    public func get<E: EntryType where E.ValueType: SerializableType>(entry: E) -> E.ValueType {
+    public func get<E: KeyType where E.ValueType: SerializableType>(entry: E) -> E.ValueType {
         return _get(entry.key) ?? entry.defaultValue
     }
     
-    public func get<E: EntryType, V: SerializableType where E.ValueType == V?>(entry: E) -> V? {
+    public func get<E: KeyType, V: SerializableType where E.ValueType == V?>(entry: E) -> V? {
         return _get(entry.key) ?? entry.defaultValue
     }
     
@@ -54,27 +54,27 @@ public final class CacheStore: Store {
         return nil
     }
     
-    public func get<E: EntryType where E.ValueType: CacheConvertible>(entry: E) -> E.ValueType {
+    public func get<E: KeyType where E.ValueType: CacheConvertible>(entry: E) -> E.ValueType {
         return _get(entry.key) ?? entry.defaultValue
     }
     
-    public func get<E: EntryType, V: CacheConvertible where E.ValueType == V?>(entry: E) -> V? {
+    public func get<E: KeyType, V: CacheConvertible where E.ValueType == V?>(entry: E) -> V? {
         return _get(entry.key) ?? entry.defaultValue
     }
     
-    public func set<E: EntryType where E.ValueType: SerializableType>(entry: E, value: E.ValueType) {
+    public func set<E: KeyType where E.ValueType: SerializableType>(entry: E, value: E.ValueType) {
         _set(entry, value: value)
     }
     
-    public func set<E: EntryType, V: SerializableType where E.ValueType == V?>(entry: E, value: V?) {
+    public func set<E: KeyType, V: SerializableType where E.ValueType == V?>(entry: E, value: V?) {
         _set(entry, value: value)
     }
     
-    public func set<E: EntryType where E.ValueType: CacheConvertible>(entry: E, value: E.ValueType) {
+    public func set<E: KeyType where E.ValueType: CacheConvertible>(entry: E, value: E.ValueType) {
         _set(entry, value: value.encodeForCache)
     }
     
-    public func set<E: EntryType, V: CacheConvertible where E.ValueType == V?>(entry: E, value: V?) {
+    public func set<E: KeyType, V: CacheConvertible where E.ValueType == V?>(entry: E, value: V?) {
         _set(entry, value: value?.encodeForCache)
     }
 }

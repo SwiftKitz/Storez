@@ -17,7 +17,7 @@ public struct GlobalNamespace: Namespace {
 }
 
 /** A Group is just a namespace to group a collection of
-    `Entry` objects together.
+    `Key` objects together.
 */
 public protocol Group: Namespace {
     

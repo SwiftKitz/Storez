@@ -6,6 +6,7 @@
 //  Copyright © 2015 mazy. All rights reserved.
 //
 
+import Foundation
 
 /** See ConvertibleValue for more information
 */
@@ -19,24 +20,51 @@ public protocol UserDefaultsConvertible {
 
 struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsAcceptedType {
     
-    let value: T?
+    let value: T
     
-    var supportedType: UserDefaultsSupportedType? {
-        return value?.encodeForUserDefaults
+    var supportedType: NSData? {
+        return value.encodeForUserDefaults?.encode
     }
     
-    init(storedValue: T.UserDefaultsType?) {
+    init?(storedValue: NSData?) {
         
-        if let storedValue = storedValue {
-            value = T.decode(userDefaultsValue: storedValue)
+        guard let storedValue: T.UserDefaultsType = storedValue?.decode(),
+            let value = T.decode(userDefaultsValue: storedValue)
+            else
+        {
+            return nil
         }
-        else {
-            value = nil
-        }
+        
+        self.value = value
     }
     
-    init(_ value: T?) {
+    init(_ value: T) {
         self.value = value
     }
 }
 
+
+struct UserDefaultsNullableConvertibleBox <T: Nullable where T.UnderlyingType: UserDefaultsConvertible>: UserDefaultsAcceptedType {
+    
+    let value: T
+    
+    var supportedType: NSData? {
+        return value.wrappedValue?.encodeForUserDefaults?.encode
+    }
+    
+    init?(storedValue: NSData?) {
+        
+        guard let data = storedValue,
+            let userDefaultValue: T.UnderlyingType.UserDefaultsType = data.decode(),
+            let value = T.UnderlyingType.decode(userDefaultsValue: userDefaultValue)
+            else {
+            return nil
+        }
+        
+        self.value = T(value)
+    }
+    
+    init(_ value: T) {
+        self.value = value
+    }
+}

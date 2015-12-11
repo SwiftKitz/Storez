@@ -1,5 +1,5 @@
 //
-//  Entry.swift
+//  Key.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/5/15.
@@ -7,7 +7,7 @@
 //
 
 
-public struct Entry<G: Group, V>: EntryType {
+public struct Key<G: Group, V>: KeyType {
     
     public typealias GroupType = G
     public typealias ValueType = V
@@ -40,4 +40,3 @@ public struct Entry<G: Group, V>: EntryType {
         return changeBlock?(newValue) ?? newValue
     }
 }
-

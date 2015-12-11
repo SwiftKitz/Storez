@@ -1,5 +1,5 @@
 //
-//  EntryTests.swift
+//  KeyTests.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/19/15.
@@ -15,7 +15,7 @@ class StoreTests: XCTestCase {
     func testKey() {
         
         let entryKey = "entry-key"
-        let entry = Entry<ChildGroup, Void?>(id: entryKey, defaultValue: nil)
+        let entry = Key<ChildGroup, Void?>(id: entryKey, defaultValue: nil)
         
         XCTAssertEqual(entry.key, [ChildGroup.key, entry.id].joinWithSeparator(":"))
     }

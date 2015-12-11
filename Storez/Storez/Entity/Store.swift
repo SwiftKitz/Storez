@@ -6,7 +6,7 @@
 //  Copyright © 2015 kitz. All rights reserved.
 //
 
-/** A store is an object that can get and set Entry
+/** A store is an object that can get and set Key
     instances.
 
     NOTE: This is useless for now

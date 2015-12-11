@@ -24,32 +24,32 @@ class CacheStoreTests: XCTestCase {
         
         let date = NSDate(timeIntervalSinceReferenceDate: 100)
         
-        let nullableEntry = Entry<GlobalGroup, NSDate?>(id: "nullable-date", defaultValue: nil)
+        let nullableKey = Key<GlobalGroup, NSDate?>(id: "nullable-date", defaultValue: nil)
         
-        XCTAssertEqual(store.get(nullableEntry), nil)
-        store.set(nullableEntry, value: date)
-        XCTAssertEqual(store.get(nullableEntry), date)
+        XCTAssertEqual(store.get(nullableKey), nil)
+        store.set(nullableKey, value: date)
+        XCTAssertEqual(store.get(nullableKey), date)
         
         let defaultDate = NSDate(timeIntervalSinceReferenceDate: 0)
-        let nonnullEntry = Entry<GlobalGroup, NSDate>(id: "nonnull-date", defaultValue: defaultDate)
+        let nonnullKey = Key<GlobalGroup, NSDate>(id: "nonnull-date", defaultValue: defaultDate)
         
-        XCTAssertEqual(store.get(nonnullEntry), defaultDate)
-        store.set(nonnullEntry, value: date)
-        XCTAssertEqual(store.get(nonnullEntry), date)
+        XCTAssertEqual(store.get(nonnullKey), defaultDate)
+        store.set(nonnullKey, value: date)
+        XCTAssertEqual(store.get(nonnullKey), date)
     }
     
     func testSwiftType() {
         
-        let nullableEntry = Entry<GlobalGroup, String?>(id: "nullable-string", defaultValue: nil)
+        let nullableKey = Key<GlobalGroup, String?>(id: "nullable-string", defaultValue: nil)
         
-        XCTAssertEqual(store.get(nullableEntry), nil)
-        store.set(nullableEntry, value: "test")
-        XCTAssertEqual(store.get(nullableEntry), "test")
+        XCTAssertEqual(store.get(nullableKey), nil)
+        store.set(nullableKey, value: "test")
+        XCTAssertEqual(store.get(nullableKey), "test")
         
-        let nonnullEntry = Entry<GlobalGroup, String>(id: "nonnull-string", defaultValue: "string")
+        let nonnullKey = Key<GlobalGroup, String>(id: "nonnull-string", defaultValue: "string")
         
-        XCTAssertEqual(store.get(nonnullEntry), "string")
-        store.set(nonnullEntry, value: "blah")
-        XCTAssertEqual(store.get(nonnullEntry), "blah")
+        XCTAssertEqual(store.get(nonnullKey), "string")
+        store.set(nonnullKey, value: "blah")
+        XCTAssertEqual(store.get(nonnullKey), "blah")
     }
 }

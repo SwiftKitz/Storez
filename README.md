@@ -13,7 +13,7 @@ _Even though I shipped it with my app, I still need to invest the time to set th
 ## Highlights
 
 + __Fully Customizable:__<br />
-Customize the persistence store, the `EntryType` class, post-commit actions .. Make this framework yours!
+Customize the persistence store, the `KeyType` class, post-commit actions .. Make this framework yours!
 
 + __Batteries Included__:<br />
 In case you just want to use stuff, the framework is shipped with pre-configured basic set of classes that you can just use.
@@ -31,7 +31,7 @@ __Available Stores__
 | `CacheStore` | `NSCache` |
 |--------------|-----------|
 
-__Type-safe, store-agnostic, nestable Entry definitions__
+__Type-safe, store-agnostic, nestable Key definitions__
 
 ```swift
 // Entries must belong to a "group", for namespacing
@@ -39,7 +39,7 @@ struct Animals: Group {
     static let id = "animals"
 }
 
-let kingdom = Entry<Animals, Void?>(id: "mammals", defaultValue: nil)
+let kingdom = Key<Animals, Void?>(id: "mammals", defaultValue: nil)
 kingdom.key // "animals:mammals"
 
 // Nesting
@@ -52,7 +52,7 @@ struct Cats: Group {
     func postCommitHook() { /* custom code */ }
 }
 
-let cat = Entry<Cats, Void?>(id: "lion", defaultValue: nil)
+let cat = Key<Cats, Void?>(id: "lion", defaultValue: nil)
 cat.key     // "animals:cats:lion"
 ```
 
@@ -61,7 +61,7 @@ __Initialize the store you want__
 ```swift
 // Use UserDefaultsStore for this example
 let store = UserDefaultsStore(suite: "io.kitz.testing")
-let entry = Entry<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
+let entry = Key<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
 
 // With three simple functions
 store.set(entry, value: 8)
@@ -72,12 +72,12 @@ store.clear() // Start fresh every time for testing
 __Optionality is honored throughout__
 
 ```swift
-let nullable = Entry<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
+let nullable = Key<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
 store.get(nullable)?.isEmpty   // nil
 store.set(nullable, value: "")
 store.get(nullable)?.isEmpty   // true
 
-let nonnull = Entry<GlobalGroup, String>(id: "nonnull", defaultValue: "!")
+let nonnull = Key<GlobalGroup, String>(id: "nonnull", defaultValue: "!")
 store.get(nonnull).isEmpty  // false
 store.set(nonnull, value: "")
 store.get(nonnull).isEmpty  // true
@@ -112,7 +112,7 @@ let customObject = CustomObject(
 )
 
 // let's add a processing block this time
-let CustomValue = Entry<GlobalGroup, CustomObject?>(id: "custom", defaultValue: nil) {
+let CustomValue = Key<GlobalGroup, CustomObject?>(id: "custom", defaultValue: nil) {
     
     var processedValue = $0
     processedValue?.strings.append("blank!")
@@ -123,11 +123,11 @@ store.set(CustomValue, value: customObject)
 store.get(CustomValue)?.strings.joinWithSeparator(" ") // fill in the blank!
 ```
 
-__Make your own `EntryType`__
+__Make your own `KeyType`__
 
 ```swift
 // For example, make an entry that emits NSNotifications
-struct MyEntry<G: Group, V>: EntryType {
+struct MyKey<G: Group, V>: KeyType {
     
     typealias GroupType = G
     typealias ValueType = V
@@ -147,7 +147,7 @@ struct MyEntry<G: Group, V>: EntryType {
 
 ## Motivation
 
-I've seen a lot of great attempts at statically-types data stores, but they all build a tightly coupled design that limits the end-developer's freedom. With this framework, you can start prototyping right away with the shipped features, then replace the persistence store and `EntryType` functionality with your heart's content __and__ keep your code the way it is!
+I've seen a lot of great attempts at statically-types data stores, but they all build a tightly coupled design that limits the end-developer's freedom. With this framework, you can start prototyping right away with the shipped features, then replace the persistence store and `KeyType` functionality with your heart's content __and__ keep your code the way it is!
 
 ## Author
 
