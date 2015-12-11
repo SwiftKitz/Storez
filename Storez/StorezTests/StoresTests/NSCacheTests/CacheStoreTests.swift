@@ -69,4 +69,63 @@ class CacheStoreTests: XCTestCase {
         store.set(nonnullKey, value: object)
         XCTAssertEqual(store.get(nonnullKey), object)
     }
+    
+    func testNil() {
+        
+        // setting nil should delete the record
+        let nullableKey = Key<GlobalGroup, String?>(id: "nil", defaultValue: nil)
+        
+        store.set(nullableKey, value: "hello, world!")
+        store.set(nullableKey, value: nil)
+        XCTAssertEqual(store.get(nullableKey), nil)
+    }
+    
+    func testDefaultValueIsResolved() {
+        
+        let defaultValue = "default-value"
+        let defaultProvider = Key<GlobalGroup, String>(id: "default-provider", defaultValue: defaultValue)
+        
+        let value = store.get(defaultProvider)
+        XCTAssertEqual(value, defaultValue)
+    }
+    
+    func testChangeBlockIsTriggered() {
+        
+        let changingKey = Key<GlobalGroup, String?>(id: "changing-object", defaultValue: nil) {
+            return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
+        }
+        
+        store.set(changingKey, value: "say my name!")
+        XCTAssertEqual(store.get(changingKey), "say my name! Heisenburg")
+    }
+    
+    func testPreCommitHook() {
+        
+        TestGroup.preCommitCalls = 0
+        
+        store.set(TestGroup.anyKey, value: "new value")
+        XCTAssertEqual(TestGroup.preCommitCalls, 1)
+    }
+    
+    func testPostCommitHook() {
+        
+        TestGroup.postCommitCalls = 0
+        
+        store.set(TestGroup.anyKey, value: "test")
+        XCTAssertEqual(TestGroup.postCommitCalls, 1)
+    }
+    
+    func testGetterPerformance() {
+        
+        self.measureBlock {
+            self.store.get(TestGroup.anyKey)
+        }
+    }
+    
+    func testSetterPerformance() {
+        
+        self.measureBlock {
+            self.store.set(TestGroup.anyKey, value: "more testing")
+        }
+    }
 }

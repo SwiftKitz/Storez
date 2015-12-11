@@ -7,29 +7,22 @@
 //
 
 import XCTest
+import Storez
+
+
+private struct Key: KeyType {
+    typealias GroupType = GlobalGroup
+    typealias ValueType = Int
+    
+    var stringValue: String { return "key" }
+    var defaultValue: ValueType { return 0 }
+}
 
 class KeyTypeTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testDefaultProcessChange() {
+        
+        let key = Key()
+        XCTAssertEqual(key.processChange(0, newValue: 1), 1)
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
