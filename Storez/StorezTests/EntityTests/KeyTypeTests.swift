@@ -11,7 +11,7 @@ import Storez
 
 
 private struct Key: KeyType {
-    typealias GroupType = GlobalGroup
+    typealias NamespaceType = GlobalNamespace
     typealias ValueType = Int
     
     var stringValue: String { return "key" }

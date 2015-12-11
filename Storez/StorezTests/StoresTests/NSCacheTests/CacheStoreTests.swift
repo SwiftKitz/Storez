@@ -24,14 +24,14 @@ class CacheStoreTests: XCTestCase {
         
         let date = NSDate(timeIntervalSinceReferenceDate: 100)
         
-        let nullableKey = Key<GlobalGroup, NSDate?>(id: "nullable-date", defaultValue: nil)
+        let nullableKey = Key<GlobalNamespace, NSDate?>(id: "nullable-date", defaultValue: nil)
         
         XCTAssertEqual(store.get(nullableKey), nil)
         store.set(nullableKey, value: date)
         XCTAssertEqual(store.get(nullableKey), date)
         
         let defaultDate = NSDate(timeIntervalSinceReferenceDate: 0)
-        let nonnullKey = Key<GlobalGroup, NSDate>(id: "nonnull-date", defaultValue: defaultDate)
+        let nonnullKey = Key<GlobalNamespace, NSDate>(id: "nonnull-date", defaultValue: defaultDate)
         
         XCTAssertEqual(store.get(nonnullKey), defaultDate)
         store.set(nonnullKey, value: date)
@@ -40,13 +40,13 @@ class CacheStoreTests: XCTestCase {
     
     func testSwiftType() {
         
-        let nullableKey = Key<GlobalGroup, String?>(id: "nullable-string", defaultValue: nil)
+        let nullableKey = Key<GlobalNamespace, String?>(id: "nullable-string", defaultValue: nil)
         
         XCTAssertEqual(store.get(nullableKey), nil)
         store.set(nullableKey, value: "test")
         XCTAssertEqual(store.get(nullableKey), "test")
         
-        let nonnullKey = Key<GlobalGroup, String>(id: "nonnull-string", defaultValue: "string")
+        let nonnullKey = Key<GlobalNamespace, String>(id: "nonnull-string", defaultValue: "string")
         
         XCTAssertEqual(store.get(nonnullKey), "string")
         store.set(nonnullKey, value: "blah")
@@ -57,13 +57,13 @@ class CacheStoreTests: XCTestCase {
         
         let object = CustomObject(title: "custom", year: 1993)
         
-        let nullableKey = Key<GlobalGroup, CustomObject?>(id: "nullable-custom", defaultValue: nil)
+        let nullableKey = Key<GlobalNamespace, CustomObject?>(id: "nullable-custom", defaultValue: nil)
         
         XCTAssertEqual(store.get(nullableKey), nil)
         store.set(nullableKey, value: object)
         XCTAssertEqual(store.get(nullableKey), object)
         
-        let nonnullKey = Key<GlobalGroup, CustomObject>(id: "nonnull-custom", defaultValue: CustomObject())
+        let nonnullKey = Key<GlobalNamespace, CustomObject>(id: "nonnull-custom", defaultValue: CustomObject())
         
         XCTAssertEqual(store.get(nonnullKey), CustomObject())
         store.set(nonnullKey, value: object)
@@ -73,7 +73,7 @@ class CacheStoreTests: XCTestCase {
     func testNil() {
         
         // setting nil should delete the record
-        let nullableKey = Key<GlobalGroup, String?>(id: "nil", defaultValue: nil)
+        let nullableKey = Key<GlobalNamespace, String?>(id: "nil", defaultValue: nil)
         
         store.set(nullableKey, value: "hello, world!")
         store.set(nullableKey, value: nil)
@@ -83,7 +83,7 @@ class CacheStoreTests: XCTestCase {
     func testDefaultValueIsResolved() {
         
         let defaultValue = "default-value"
-        let defaultProvider = Key<GlobalGroup, String>(id: "default-provider", defaultValue: defaultValue)
+        let defaultProvider = Key<GlobalNamespace, String>(id: "default-provider", defaultValue: defaultValue)
         
         let value = store.get(defaultProvider)
         XCTAssertEqual(value, defaultValue)
@@ -91,7 +91,7 @@ class CacheStoreTests: XCTestCase {
     
     func testChangeBlockIsTriggered() {
         
-        let changingKey = Key<GlobalGroup, String?>(id: "changing-object", defaultValue: nil) {
+        let changingKey = Key<GlobalNamespace, String?>(id: "changing-object", defaultValue: nil) {
             return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
         }
         
@@ -101,31 +101,31 @@ class CacheStoreTests: XCTestCase {
     
     func testPreCommitHook() {
         
-        TestGroup.preCommitCalls = 0
+        TestNamespace.preCommitCalls = 0
         
-        store.set(TestGroup.anyKey, value: "new value")
-        XCTAssertEqual(TestGroup.preCommitCalls, 1)
+        store.set(TestNamespace.anyKey, value: "new value")
+        XCTAssertEqual(TestNamespace.preCommitCalls, 1)
     }
     
     func testPostCommitHook() {
         
-        TestGroup.postCommitCalls = 0
+        TestNamespace.postCommitCalls = 0
         
-        store.set(TestGroup.anyKey, value: "test")
-        XCTAssertEqual(TestGroup.postCommitCalls, 1)
+        store.set(TestNamespace.anyKey, value: "test")
+        XCTAssertEqual(TestNamespace.postCommitCalls, 1)
     }
     
     func testGetterPerformance() {
         
         self.measureBlock {
-            self.store.get(TestGroup.anyKey)
+            self.store.get(TestNamespace.anyKey)
         }
     }
     
     func testSetterPerformance() {
         
         self.measureBlock {
-            self.store.set(TestGroup.anyKey, value: "more testing")
+            self.store.set(TestNamespace.anyKey, value: "more testing")
         }
     }
 }

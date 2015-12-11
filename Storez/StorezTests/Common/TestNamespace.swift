@@ -1,5 +1,5 @@
 //
-//  TestGroup.swift
+//  TestNamespace.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/5/15.
@@ -9,11 +9,11 @@
 import Storez
 
 
-struct TestGroup: Group {
+struct TestNamespace: Namespace {
     
     static let id = "testgroup"
     
-    static let anyKey = Key<TestGroup, String?>(id: "any-key", defaultValue: nil)
+    static let anyKey = Key<TestNamespace, String?>(id: "any-key", defaultValue: nil)
     
     static var preCommitCalls = 0
     static func preCommitHook() {
@@ -26,9 +26,9 @@ struct TestGroup: Group {
     }
 }
 
-struct ChildGroup: Group {
+struct ChildNamespace: Namespace {
     
-    typealias parent = TestGroup
+    typealias parent = TestNamespace
     
     static let id = "child-group"
 }

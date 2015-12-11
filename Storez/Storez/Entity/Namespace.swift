@@ -1,33 +1,29 @@
 //
-//  Group.swift
+//  Namespace.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/5/15.
 //  Copyright © 2015 kitz. All rights reserved.
 //
 
-/** We use Namespace protocol to break nested types
+/** We use Identifiable protocol to break nested types
 */
-public protocol Namespace {
+public protocol Identifiable {
     static var id: String { get }
 }
 
-public struct GlobalNamespace: Namespace {
-    public static let id = ""
-}
-
-/** A Group is just a namespace to group a collection of
+/** A Namespace is just a namespace to group a collection of
     `Key` objects together.
 */
-public protocol Group: Namespace {
+public protocol Namespace: Identifiable {
     
-    typealias parent: Namespace = GlobalNamespace
+    typealias parent: Identifiable = GlobalNamespace
     
     static func preCommitHook()     /* Optional */
     static func postCommitHook()    /* Optional */
 }
 
-public extension Group {
+public extension Namespace {
 
     static var key: String {
         
@@ -42,6 +38,6 @@ public extension Group {
 
 // Convenience Global group
 
-public struct GlobalGroup: Group {
+public struct GlobalNamespace: Namespace {
     public static let id = ""
 }

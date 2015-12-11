@@ -1,5 +1,5 @@
 //
-//  GroupTests.swift
+//  NamespaceTests.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 11/19/15.
@@ -10,15 +10,15 @@ import XCTest
 @testable import Storez
 
 
-class GroupTests: XCTestCase {
+class NamespaceTests: XCTestCase {
     
     func testSingleKey() {
-        XCTAssertEqual(TestGroup.key, TestGroup.id)
+        XCTAssertEqual(TestNamespace.key, TestNamespace.id)
     }
     
     func testNestedKeys() {
         
-        let expectedKey = [ChildGroup.parent.key, ChildGroup.id].joinWithSeparator(":")
-        XCTAssertEqual(ChildGroup.key, expectedKey)
+        let expectedKey = [ChildNamespace.parent.key, ChildNamespace.id].joinWithSeparator(":")
+        XCTAssertEqual(ChildNamespace.key, expectedKey)
     }
 }

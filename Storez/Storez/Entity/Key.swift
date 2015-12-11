@@ -7,9 +7,9 @@
 //
 
 
-public struct Key<G: Group, V>: KeyType {
+public struct Key<G: Namespace, V>: KeyType {
     
-    public typealias GroupType = G
+    public typealias NamespaceType = G
     public typealias ValueType = V
     
     public typealias ChangeBlock = (ValueType) -> (ValueType)
@@ -20,7 +20,7 @@ public struct Key<G: Group, V>: KeyType {
     public var changeBlock: ChangeBlock?
     
     public var stringValue: String {
-        return [GroupType.key, id].joinWithSeparator(":")
+        return [NamespaceType.key, id].joinWithSeparator(":")
     }
     
     // MARK: - Init & Dealloc

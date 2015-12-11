@@ -11,7 +11,7 @@
 */
 public protocol KeyType {
     
-    typealias GroupType: Group
+    typealias NamespaceType: Namespace
     typealias ValueType
     
     var stringValue: String { get }

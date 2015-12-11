@@ -23,14 +23,14 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testUserDefaultValueTypes() {
         
-        let arrayKey = Key<GlobalGroup, NSArray>(id: "array", defaultValue: [1])
+        let arrayKey = Key<GlobalNamespace, NSArray>(id: "array", defaultValue: [1])
         let array: NSArray = [1, 2, 3]
         
         XCTAssertEqual(store.get(arrayKey), [1])
         store.set(arrayKey, value: array)
         XCTAssertEqual(store.get(arrayKey), array)
         
-        let dateKey = Key<GlobalGroup, NSDate?>(id: "date", defaultValue: nil)
+        let dateKey = Key<GlobalNamespace, NSDate?>(id: "date", defaultValue: nil)
         let date = NSDate(timeIntervalSinceReferenceDate: 500)
         
         XCTAssertEqual(store.get(dateKey), nil)
@@ -40,7 +40,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testNSCodingConformingTypes() {
         
-        let uuidKey = Key<GlobalGroup, NSUUID?>(id: "uuid", defaultValue: nil)
+        let uuidKey = Key<GlobalNamespace, NSUUID?>(id: "uuid", defaultValue: nil)
         let uuid = NSUUID()
         
         XCTAssertEqual(store.get(uuidKey), nil)
@@ -51,7 +51,7 @@ class UserDefaultsStoreTests: XCTestCase {
     func testPrimitiveTypes() {
         
         let value = 20.4
-        let primitive = Key<GlobalGroup, Double?>(id: "primitive", defaultValue: nil)
+        let primitive = Key<GlobalNamespace, Double?>(id: "primitive", defaultValue: nil)
         
         XCTAssertEqual(store.get(primitive), nil)
         store.set(primitive, value: value)
@@ -60,7 +60,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testStringType() {
         
-        let text = Key<GlobalGroup, String>(id: "text", defaultValue: "default")
+        let text = Key<GlobalNamespace, String>(id: "text", defaultValue: "default")
         let value = "testing-string-🇦🇪"
         
         XCTAssertEqual(store.get(text), "default")
@@ -75,7 +75,7 @@ class UserDefaultsStoreTests: XCTestCase {
             year: 1886
         )
         
-        let customKey = Key<GlobalGroup, CustomObject?>(id: "custom-object", defaultValue: nil)
+        let customKey = Key<GlobalNamespace, CustomObject?>(id: "custom-object", defaultValue: nil)
         
         store.set(customKey, value: value)
         XCTAssertEqual(store.get(customKey), value)
@@ -84,7 +84,7 @@ class UserDefaultsStoreTests: XCTestCase {
     func testDefaultValueIsResolved() {
         
         let defaultValue = "default-value"
-        let defaultProvider = Key<GlobalGroup, String>(id: "default-provider", defaultValue: defaultValue)
+        let defaultProvider = Key<GlobalNamespace, String>(id: "default-provider", defaultValue: defaultValue)
         
         let value = store.get(defaultProvider)
         XCTAssertEqual(value, defaultValue)
@@ -92,7 +92,7 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testChangeBlockIsTriggered() {
         
-        let changingKey = Key<GlobalGroup, String?>(id: "changing-object", defaultValue: nil) {
+        let changingKey = Key<GlobalNamespace, String?>(id: "changing-object", defaultValue: nil) {
             return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
         }
 
@@ -102,31 +102,31 @@ class UserDefaultsStoreTests: XCTestCase {
     
     func testPreCommitHook() {
         
-        TestGroup.preCommitCalls = 0
+        TestNamespace.preCommitCalls = 0
         
-        store.set(TestGroup.anyKey, value: "new value")
-        XCTAssertEqual(TestGroup.preCommitCalls, 1)
+        store.set(TestNamespace.anyKey, value: "new value")
+        XCTAssertEqual(TestNamespace.preCommitCalls, 1)
     }
     
     func testPostCommitHook() {
         
-        TestGroup.postCommitCalls = 0
+        TestNamespace.postCommitCalls = 0
         
-        store.set(TestGroup.anyKey, value: "test")
-        XCTAssertEqual(TestGroup.postCommitCalls, 1)
+        store.set(TestNamespace.anyKey, value: "test")
+        XCTAssertEqual(TestNamespace.postCommitCalls, 1)
     }
     
     func testGetterPerformance() {
         
         self.measureBlock {
-            self.store.get(TestGroup.anyKey)
+            self.store.get(TestNamespace.anyKey)
         }
     }
     
     func testSetterPerformance() {
         
         self.measureBlock {
-            self.store.set(TestGroup.anyKey, value: "more testing")
+            self.store.set(TestNamespace.anyKey, value: "more testing")
         }
     }
     

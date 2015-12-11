@@ -27,7 +27,7 @@ public final class CacheStore: Store {
     
     private func _write<K: KeyType>(key: K, object: AnyObject?) {
         
-        K.GroupType.preCommitHook()
+        K.NamespaceType.preCommitHook()
         
         if let object = object {
             cache.setObject(object, forKey: key.stringValue)
@@ -36,7 +36,7 @@ public final class CacheStore: Store {
             cache.removeObjectForKey(key.stringValue)
         }
         
-        K.GroupType.postCommitHook()
+        K.NamespaceType.postCommitHook()
     }
     
     private func _set<K: KeyType, B: CacheTransaction where K.ValueType == B.ValueType>(key: K, box: B) {

@@ -29,12 +29,12 @@ public final class UserDefaultsStore: Store {
     
     private func _write<K: KeyType>(key: K, data: NSData?) {
         
-        K.GroupType.preCommitHook()
+        K.NamespaceType.preCommitHook()
         
         defaults.setObject(data, forKey: key.stringValue)
         defaults.synchronize()
         
-        K.GroupType.postCommitHook()
+        K.NamespaceType.postCommitHook()
     }
     
     private func _set<K: KeyType, B: UserDefaultsTransaction where K.ValueType == B.ValueType>(key: K, box: B) {

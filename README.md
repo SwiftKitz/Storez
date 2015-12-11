@@ -35,7 +35,7 @@ __Type-safe, store-agnostic, nestable Key definitions__
 
 ```swift
 // Entries must belong to a "group", for namespacing
-struct Animals: Group {
+struct Animals: Namespace {
     static let id = "animals"
 }
 
@@ -43,11 +43,11 @@ let kingdom = Key<Animals, Void?>(id: "mammals", defaultValue: nil)
 kingdom.stringValue // "animals:mammals"
 
 // Nesting
-struct Cats: Group {
+struct Cats: Namespace {
     typealias parent = Animals
     static let id = "cats"
     
-    // Groups also have pre and post commit hooks
+    // Namespaces also have pre and post commit hooks
     func preCommitHook() { /* custom code */ }
     func postCommitHook() { /* custom code */ }
 }
@@ -61,7 +61,7 @@ __Initialize the store you want__
 ```swift
 // Use UserDefaultsStore for this example
 let store = UserDefaultsStore(suite: "io.kitz.testing")
-let key = Key<GlobalGroup, Int?>(id: "key", defaultValue: nil)
+let key = Key<GlobalNamespace, Int?>(id: "key", defaultValue: nil)
 
 // With three simple functions
 store.set(key, value: 8)
@@ -72,12 +72,12 @@ store.clear() // Start fresh every time for testing
 __Optionality is honored throughout__
 
 ```swift
-let nullable = Key<GlobalGroup, String?>(id: "nullable", defaultValue: nil)
+let nullable = Key<GlobalNamespace, String?>(id: "nullable", defaultValue: nil)
 store.get(nullable)?.isEmpty   // nil
 store.set(nullable, value: "")
 store.get(nullable)?.isEmpty   // true
 
-let nonnull = Key<GlobalGroup, String>(id: "nonnull", defaultValue: "!")
+let nonnull = Key<GlobalNamespace, String>(id: "nonnull", defaultValue: "!")
 store.get(nonnull).isEmpty  // false
 store.set(nonnull, value: "")
 store.get(nonnull).isEmpty  // true
@@ -112,7 +112,7 @@ let customObject = CustomObject(
 )
 
 // let's add a processing block this time
-let CustomValue = Key<GlobalGroup, CustomObject?>(id: "custom", defaultValue: nil) {
+let CustomValue = Key<GlobalNamespace, CustomObject?>(id: "custom", defaultValue: nil) {
     
     var processedValue = $0
     processedValue?.strings.append("blank!")
@@ -127,9 +127,9 @@ __Make your own `KeyType`__
 
 ```swift
 // For example, make an key that emits NSNotifications
-struct MyKey<G: Group, V>: KeyType {
+struct MyKey<G: Namespace, V>: KeyType {
     
-    typealias GroupType = G
+    typealias NamespaceType = G
     typealias ValueType = V
     
     var stringValue: String
