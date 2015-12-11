@@ -1,5 +1,5 @@
 //
-//  UserDefaultsAcceptedType.swift
+//  UserDefaultsTransaction.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 12/11/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserDefaultsAcceptedType {
+protocol UserDefaultsTransaction {
     
     typealias ValueType
     

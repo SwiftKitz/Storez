@@ -21,7 +21,7 @@ public final class UserDefaultsStore: Store {
     
     // MARK: - Private methods
     
-    private func _read<K: KeyType, B: UserDefaultsAcceptedType where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
+    private func _read<K: KeyType, B: UserDefaultsTransaction where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
         
         let data = defaults.objectForKey(key.stringValue) as? NSData
         return boxType.init(storedValue: data)?.value ?? key.defaultValue
@@ -37,7 +37,7 @@ public final class UserDefaultsStore: Store {
         K.GroupType.postCommitHook()
     }
     
-    private func _set<K: KeyType, B: UserDefaultsAcceptedType where K.ValueType == B.ValueType>(key: K, box: B) {
+    private func _set<K: KeyType, B: UserDefaultsTransaction where K.ValueType == B.ValueType>(key: K, box: B) {
         
         let oldValue = _read(key, boxType: B.self)
         let newValue = key.processChange(oldValue, newValue: box.value ?? key.defaultValue)

@@ -18,7 +18,7 @@ public protocol UserDefaultsConvertible {
 }
 
 
-struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsAcceptedType {
+struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsTransaction {
     
     let value: T
     
@@ -44,7 +44,7 @@ struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsAcce
 }
 
 
-struct UserDefaultsNullableConvertibleBox <T: Nullable where T.UnderlyingType: UserDefaultsConvertible>: UserDefaultsAcceptedType {
+struct UserDefaultsNullableConvertibleBox <T: Nullable where T.UnderlyingType: UserDefaultsConvertible>: UserDefaultsTransaction {
     
     let value: T
     

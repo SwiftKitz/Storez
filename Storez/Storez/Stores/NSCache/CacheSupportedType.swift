@@ -11,7 +11,7 @@
 public typealias CacheSupportedType = AnyObject
 
 
-struct CacheSupportedBox <T: CacheSupportedType>: CacheAcceptedType {
+struct CacheSupportedBox <T: CacheSupportedType>: CacheTransaction {
     
     let value: T
     
@@ -36,7 +36,7 @@ struct CacheSupportedBox <T: CacheSupportedType>: CacheAcceptedType {
 }
 
 
-struct CacheNullableSupportedBox <T: Nullable where T.UnderlyingType: CacheSupportedType>: CacheAcceptedType {
+struct CacheNullableSupportedBox <T: Nullable where T.UnderlyingType: CacheSupportedType>: CacheTransaction {
     
     let value: T
     

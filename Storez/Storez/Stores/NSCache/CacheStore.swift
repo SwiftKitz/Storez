@@ -19,7 +19,7 @@ public final class CacheStore: Store {
         cache.removeAllObjects()
     }
     
-    private func _read<K: KeyType, B: CacheAcceptedType where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
+    private func _read<K: KeyType, B: CacheTransaction where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
         
         let object: AnyObject? = cache.objectForKey(key.stringValue)
         return  boxType.init(storedValue: object)?.value ?? key.defaultValue
@@ -39,7 +39,7 @@ public final class CacheStore: Store {
         K.GroupType.postCommitHook()
     }
     
-    private func _set<K: KeyType, B: CacheAcceptedType where K.ValueType == B.ValueType>(key: K, box: B) {
+    private func _set<K: KeyType, B: CacheTransaction where K.ValueType == B.ValueType>(key: K, box: B) {
         
         let oldValue = _read(key, boxType: B.self)
         let newValue = key.processChange(oldValue, newValue: box.value ?? key.defaultValue)

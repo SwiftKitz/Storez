@@ -15,7 +15,7 @@ import Foundation
 public typealias UserDefaultsSupportedType = NSCoding
 
 
-struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaultsAcceptedType {
+struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaultsTransaction {
     
     let value: T
     
@@ -37,7 +37,7 @@ struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaults
     }
 }
 
-struct UserDefaultsNullableSupportedTypeBox <T: Nullable where T.UnderlyingType: UserDefaultsSupportedType>: UserDefaultsAcceptedType {
+struct UserDefaultsNullableSupportedTypeBox <T: Nullable where T.UnderlyingType: UserDefaultsSupportedType>: UserDefaultsTransaction {
     
     let value: T
     

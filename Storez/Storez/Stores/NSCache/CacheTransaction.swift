@@ -1,12 +1,12 @@
 //
-//  CacheAcceptedType.swift
+//  CacheTransaction.swift
 //  Storez
 //
 //  Created by Mazyad Alabduljaleel on 12/11/15.
 //  Copyright © 2015 mazy. All rights reserved.
 //
 
-protocol CacheAcceptedType {
+protocol CacheTransaction {
     
     typealias ValueType
     

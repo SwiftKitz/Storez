@@ -16,7 +16,7 @@ public protocol CacheConvertible {
 }
 
 
-struct CacheConvertibleBox <T: CacheConvertible>: CacheAcceptedType {
+struct CacheConvertibleBox <T: CacheConvertible>: CacheTransaction {
     
     let value: T
     
@@ -44,7 +44,7 @@ struct CacheConvertibleBox <T: CacheConvertible>: CacheAcceptedType {
 }
 
 
-struct CacheNullableConvertibleBox <T: Nullable where T.UnderlyingType: CacheConvertible>: CacheAcceptedType {
+struct CacheNullableConvertibleBox <T: Nullable where T.UnderlyingType: CacheConvertible>: CacheTransaction {
     
     let value: T
     
