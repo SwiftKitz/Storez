@@ -14,7 +14,7 @@ public protocol KeyType {
     typealias GroupType: Group
     typealias ValueType
     
-    var key: String { get }
+    var stringValue: String { get }
     var defaultValue: ValueType { get }
     
     /* optional */

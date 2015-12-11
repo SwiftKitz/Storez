@@ -32,31 +32,31 @@ public final class UserDefaultsStore: Store {
     
     // MARK: - Private methods
     
-    private func _read<E: KeyType, B: UserDefaultsAcceptedType where E.ValueType == B.ValueType>(entry: E, boxType: B.Type) -> E.ValueType {
+    private func _read<E: KeyType, B: UserDefaultsAcceptedType where E.ValueType == B.ValueType>(key: E, boxType: B.Type) -> E.ValueType {
         
-        let data = defaults.objectForKey(entry.key) as? NSData
-        return boxType.init(storedValue: data)?.value ?? entry.defaultValue
+        let data = defaults.objectForKey(key.stringValue) as? NSData
+        return boxType.init(storedValue: data)?.value ?? key.defaultValue
     }
     
-    private func _write<E: KeyType>(entry: E, data: NSData?) {
+    private func _write<E: KeyType>(key: E, data: NSData?) {
         
         E.GroupType.preCommitHook()
         
-        defaults.setObject(data, forKey: entry.key)
+        defaults.setObject(data, forKey: key.stringValue)
         defaults.synchronize()
         
         E.GroupType.postCommitHook()
     }
     
-    private func _set<E: KeyType, B: UserDefaultsAcceptedType where E.ValueType == B.ValueType>(entry: E, box: B) {
+    private func _set<E: KeyType, B: UserDefaultsAcceptedType where E.ValueType == B.ValueType>(key: E, box: B) {
         
-        let oldValue = _read(entry, boxType: B.self)
-        let newValue = entry.processChange(oldValue, newValue: box.value ?? entry.defaultValue)
+        let oldValue = _read(key, boxType: B.self)
+        let newValue = key.processChange(oldValue, newValue: box.value ?? key.defaultValue)
         let newBox = B(newValue)
         
-        entry.willChange(oldValue, newValue: newValue)
-        _write(entry, data: newBox.supportedType)
-        entry.didChange(oldValue, newValue: newValue)
+        key.willChange(oldValue, newValue: newValue)
+        _write(key, data: newBox.supportedType)
+        key.didChange(oldValue, newValue: newValue)
     }
     
     // MARK: - Public methods
@@ -68,36 +68,36 @@ public final class UserDefaultsStore: Store {
         defaults.synchronize()
     }
 
-    public func get<E: KeyType where E.ValueType: UserDefaultsConvertible>(entry: E) -> E.ValueType {
-        return _read(entry, boxType: UserDefaultsConvertibleBox.self)
+    public func get<E: KeyType where E.ValueType: UserDefaultsConvertible>(key: E) -> E.ValueType {
+        return _read(key, boxType: UserDefaultsConvertibleBox.self)
     }
     
-    public func get<E: KeyType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E) -> V? {
-        return _read(entry, boxType: UserDefaultsNullableConvertibleBox.self)
+    public func get<E: KeyType, V: UserDefaultsConvertible where E.ValueType == V?>(key: E) -> V? {
+        return _read(key, boxType: UserDefaultsNullableConvertibleBox.self)
     }
     
-    public func get<E: KeyType where E.ValueType: UserDefaultsSupportedType>(entry: E) -> E.ValueType {
-        return _read(entry, boxType: UserDefaultsSupportedTypeBox.self)
+    public func get<E: KeyType where E.ValueType: UserDefaultsSupportedType>(key: E) -> E.ValueType {
+        return _read(key, boxType: UserDefaultsSupportedTypeBox.self)
     }
     
-    public func get<E: KeyType, V: NSCoding where E.ValueType == V?>(entry: E) -> V? {
-        return _read(entry, boxType: UserDefaultsNullableSupportedTypeBox.self)
+    public func get<E: KeyType, V: NSCoding where E.ValueType == V?>(key: E) -> V? {
+        return _read(key, boxType: UserDefaultsNullableSupportedTypeBox.self)
     }
     
-    public func set<E: KeyType where E.ValueType: UserDefaultsConvertible>(entry: E, value: E.ValueType) {
-        _set(entry, box: UserDefaultsConvertibleBox(value))
+    public func set<E: KeyType where E.ValueType: UserDefaultsConvertible>(key: E, value: E.ValueType) {
+        _set(key, box: UserDefaultsConvertibleBox(value))
     }
     
-    public func set<E: KeyType, V: UserDefaultsConvertible where E.ValueType == V?>(entry: E, value: V?) {
-        _set(entry, box: UserDefaultsNullableConvertibleBox(value))
+    public func set<E: KeyType, V: UserDefaultsConvertible where E.ValueType == V?>(key: E, value: V?) {
+        _set(key, box: UserDefaultsNullableConvertibleBox(value))
     }
     
-    public func set<E: KeyType where E.ValueType: NSCoding>(entry: E, value: E.ValueType) {
-        _set(entry, box: UserDefaultsSupportedTypeBox(value))
+    public func set<E: KeyType where E.ValueType: NSCoding>(key: E, value: E.ValueType) {
+        _set(key, box: UserDefaultsSupportedTypeBox(value))
     }
     
-    public func set<E: KeyType, V: NSCoding where E.ValueType == V?>(entry: E, value: V?) {
-        _set(entry, box: UserDefaultsNullableSupportedTypeBox(value))
+    public func set<E: KeyType, V: NSCoding where E.ValueType == V?>(key: E, value: V?) {
+        _set(key, box: UserDefaultsNullableSupportedTypeBox(value))
     }
 }
 

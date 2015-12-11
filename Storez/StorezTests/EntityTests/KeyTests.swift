@@ -12,11 +12,11 @@ import XCTest
 
 class StoreTests: XCTestCase {
     
-    func testKey() {
+    func testStringValue() {
         
-        let entryKey = "entry-key"
-        let entry = Key<ChildGroup, Void?>(id: entryKey, defaultValue: nil)
+        let id = "key-id"
+        let key = Key<ChildGroup, Void?>(id: id, defaultValue: nil)
         
-        XCTAssertEqual(entry.key, [ChildGroup.key, entry.id].joinWithSeparator(":"))
+        XCTAssertEqual(key.stringValue, [ChildGroup.key, key.id].joinWithSeparator(":"))
     }
 }

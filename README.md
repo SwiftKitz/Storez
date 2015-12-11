@@ -40,7 +40,7 @@ struct Animals: Group {
 }
 
 let kingdom = Key<Animals, Void?>(id: "mammals", defaultValue: nil)
-kingdom.key // "animals:mammals"
+kingdom.stringValue // "animals:mammals"
 
 // Nesting
 struct Cats: Group {
@@ -53,7 +53,7 @@ struct Cats: Group {
 }
 
 let cat = Key<Cats, Void?>(id: "lion", defaultValue: nil)
-cat.key     // "animals:cats:lion"
+cat.stringValue // "animals:cats:lion"
 ```
 
 __Initialize the store you want__
@@ -61,11 +61,11 @@ __Initialize the store you want__
 ```swift
 // Use UserDefaultsStore for this example
 let store = UserDefaultsStore(suite: "io.kitz.testing")
-let entry = Key<GlobalGroup, Int?>(id: "entry", defaultValue: nil)
+let key = Key<GlobalGroup, Int?>(id: "key", defaultValue: nil)
 
 // With three simple functions
-store.set(entry, value: 8)
-store.get(entry) // 8
+store.set(key, value: 8)
+store.get(key) // 8
 store.clear() // Start fresh every time for testing
 ```
 
@@ -126,17 +126,17 @@ store.get(CustomValue)?.strings.joinWithSeparator(" ") // fill in the blank!
 __Make your own `KeyType`__
 
 ```swift
-// For example, make an entry that emits NSNotifications
+// For example, make an key that emits NSNotifications
 struct MyKey<G: Group, V>: KeyType {
     
     typealias GroupType = G
     typealias ValueType = V
     
-    var key: String
+    var stringValue: String
     var defaultValue: ValueType
     
     func didChange(oldValue: ValueType, newValue: ValueType) {
-        NSNotificationCenter.defaultCenter().postNotificationName(key, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(stringValue, object: nil)
     }
 }
 ```

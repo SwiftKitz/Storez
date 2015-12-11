@@ -19,7 +19,7 @@ public struct Key<G: Group, V>: KeyType {
     public var defaultValue: ValueType
     public var changeBlock: ChangeBlock?
     
-    public var key: String {
+    public var stringValue: String {
         return [GroupType.key, id].joinWithSeparator(":")
     }
     
