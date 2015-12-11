@@ -9,9 +9,61 @@
 /** See ConvertibleValue for more info
 */
 public protocol CacheConvertible {
-    
     typealias CacheType: CacheSupportedType
     
     static func decode(cacheValue value: CacheType) -> Self?
     var encodeForCache: CacheType? { get }
+}
+
+
+struct CacheConvertibleBox <T: CacheConvertible>: CacheAcceptedType {
+    
+    let value: T
+    
+    var supportedType: AnyObject? {
+        // FIXME: Compiler crash
+        let anyObject: AnyObject? = value.encodeForCache
+        return anyObject
+    }
+    
+    init?(storedValue: AnyObject?) {
+        
+        guard let cacheValue = storedValue as? T.CacheType,
+            let value = T.decode(cacheValue: cacheValue)
+            else
+        {
+            return nil
+        }
+        
+        self.value = value
+    }
+    
+    init(_ value: T) {
+        self.value = value
+    }
+}
+
+
+struct CacheNullableConvertibleBox <T: Nullable where T.UnderlyingType: CacheConvertible>: CacheAcceptedType {
+    
+    let value: T
+    
+    var supportedType: AnyObject? {
+        return value.wrappedValue?.encodeForCache
+    }
+    
+    init?(storedValue: AnyObject?) {
+        
+        guard let cacheValue = storedValue as? T.UnderlyingType.CacheType,
+            let value = T.UnderlyingType.decode(cacheValue: cacheValue)
+            else {
+                return nil
+        }
+        
+        self.value = T(value)
+    }
+    
+    init(_ value: T) {
+        self.value = value
+    }
 }

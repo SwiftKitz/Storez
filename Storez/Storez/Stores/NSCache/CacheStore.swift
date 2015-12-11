@@ -10,9 +10,7 @@ import Foundation
 
 
 public final class CacheStore: Store {
-    
-    public typealias SerializableType = CacheSupportedType
-    
+        
     public let cache = NSCache()
     
     public init() {}
@@ -21,60 +19,66 @@ public final class CacheStore: Store {
         cache.removeAllObjects()
     }
     
-    private func _get<V: SerializableType>(key: String) -> V? {
-        return cache.objectForKey(key) as? V
+    private func _read<K: KeyType, B: CacheAcceptedType where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
+        
+        let object: AnyObject? = cache.objectForKey(key.stringValue)
+        return  boxType.init(storedValue: object)?.value ?? key.defaultValue
     }
     
-    private func _set<E: KeyType>(key: E, value: SerializableType?) {
+    private func _write<K: KeyType>(key: K, object: AnyObject?) {
         
-        if let value = value {
-            cache.setObject(value, forKey: key.stringValue)
+        K.GroupType.preCommitHook()
+        
+        if let object = object {
+            cache.setObject(object, forKey: key.stringValue)
         }
         else {
             cache.removeObjectForKey(key.stringValue)
         }
         
-        E.GroupType.postCommitHook()
+        K.GroupType.postCommitHook()
     }
     
-    public func get<E: KeyType where E.ValueType: SerializableType>(key: E) -> E.ValueType {
-        return _get(key.stringValue) ?? key.defaultValue
-    }
-    
-    public func get<E: KeyType, V: SerializableType where E.ValueType == V?>(key: E) -> V? {
-        return _get(key.stringValue) ?? key.defaultValue
-    }
-    
-    private func _get<V: CacheConvertible>(key: String) -> V? {
+    private func _set<K: KeyType, B: CacheAcceptedType where K.ValueType == B.ValueType>(key: K, box: B) {
         
-        if let storedValue: V.CacheType = _get(key) {
-            return V.decode(cacheValue: storedValue)
-        }
+        let oldValue = _read(key, boxType: B.self)
+        let newValue = key.processChange(oldValue, newValue: box.value ?? key.defaultValue)
+        let newBox = B(newValue)
         
-        return nil
+        key.willChange(oldValue, newValue: newValue)
+        _write(key, object: newBox.supportedType)
+        key.didChange(oldValue, newValue: newValue)
     }
     
-    public func get<E: KeyType where E.ValueType: CacheConvertible>(key: E) -> E.ValueType {
-        return _get(key.stringValue) ?? key.defaultValue
+    public func get<K: KeyType where K.ValueType: CacheSupportedType>(key: K) -> K.ValueType {
+        return _read(key, boxType: CacheSupportedBox.self)
     }
     
-    public func get<E: KeyType, V: CacheConvertible where E.ValueType == V?>(key: E) -> V? {
-        return _get(key.stringValue) ?? key.defaultValue
+    public func get<K: KeyType, V: CacheSupportedType where K.ValueType == V?>(key: K) -> V? {
+        return _read(key, boxType: CacheNullableSupportedBox.self)
     }
     
-    public func set<E: KeyType where E.ValueType: SerializableType>(key: E, value: E.ValueType) {
-        _set(key, value: value)
+    public func get<K: KeyType where K.ValueType: CacheConvertible>(key: K) -> K.ValueType {
+        return _read(key, boxType: CacheConvertibleBox.self)
     }
     
-    public func set<E: KeyType, V: SerializableType where E.ValueType == V?>(key: E, value: V?) {
-        _set(key, value: value)
+    public func get<K: KeyType, V: CacheConvertible where K.ValueType == V?>(key: K) -> V? {
+        return _read(key, boxType: CacheNullableConvertibleBox.self)
     }
     
-    public func set<E: KeyType where E.ValueType: CacheConvertible>(key: E, value: E.ValueType) {
-        _set(key, value: value.encodeForCache)
+    public func set<K: KeyType where K.ValueType: CacheSupportedType>(key: K, value: K.ValueType) {
+        _set(key, box: CacheSupportedBox(value))
     }
     
-    public func set<E: KeyType, V: CacheConvertible where E.ValueType == V?>(key: E, value: V?) {
-        _set(key, value: value?.encodeForCache)
+    public func set<K: KeyType, V: CacheSupportedType where K.ValueType == V?>(key: K, value: V?) {
+        _set(key, box: CacheNullableSupportedBox(value))
+    }
+    
+    public func set<K: KeyType where K.ValueType: CacheConvertible>(key: K, value: K.ValueType) {
+        _set(key, box: CacheConvertibleBox(value))
+    }
+    
+    public func set<K: KeyType, V: CacheConvertible where K.ValueType == V?>(key: K, value: V?) {
+        _set(key, box: CacheNullableConvertibleBox(value))
     }
 }
