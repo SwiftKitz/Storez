@@ -23,9 +23,8 @@ struct Cats: Group {
     static let id = "cats"
     
     // Groups also have pre and post commit hooks
-    func postCommitHook() {
-        // do something when values change
-    }
+    func preCommitHook() { /* custom code */ }
+    func postCommitHook() { /* custom code */ }
 }
 
 let cat = Key<Cats, Void?>(id: "lion", defaultValue: nil)
@@ -33,7 +32,7 @@ cat.stringValue // "animals:cats:lion"
 
 //: Initialize the store you want
 
-// Currently, only UserDefaultsStore is implemented
+// Use UserDefaultsStore for this example
 let store = UserDefaultsStore(suite: "io.kitz.testing")
 let key = Key<GlobalGroup, Int?>(id: "key", defaultValue: nil)
 
