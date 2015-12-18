@@ -34,7 +34,6 @@ __Available Stores__
 |-------|---------|
 | `UserDefaultsStore` | `NSUserDefaults` |
 | `CacheStore` | `NSCache` |
-|--------------|-----------|
 
 __Type-safe, store-agnostic, nestable Key definitions__
 
