@@ -296,7 +296,7 @@
 			path = EntityTests;
 			sourceTree = "<group>";
 		};
-		828C1CBA1C178E390027C73D /* NSCache */ = {
+		828C1CBA1C178E390027C73D /* Cache */ = {
 			isa = PBXGroup;
 			children = (
 				828C1CBB1C178E680027C73D /* CacheStore.swift */,
@@ -305,7 +305,7 @@
 				829DA9C01C18A52600E6623C /* CacheConvertible.swift */,
 				829DA9CA1C18AA8D00E6623C /* CacheConvertible+Swift.swift */,
 			);
-			path = NSCache;
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		829DA9CF1C18B89700E6623C /* NSUserDefaultsTests */ = {
@@ -327,13 +327,13 @@
 		82D4FE6D1BFD49000077D392 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				828C1CBA1C178E390027C73D /* NSCache */,
-				82D4FE8C1BFD65950077D392 /* NSUserDefaults */,
+				828C1CBA1C178E390027C73D /* Cache */,
+				82D4FE8C1BFD65950077D392 /* UserDefaults */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
 		};
-		82D4FE8C1BFD65950077D392 /* NSUserDefaults */ = {
+		82D4FE8C1BFD65950077D392 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
 				82D4FE8D1BFD65AF0077D392 /* UserDefaultsStore.swift */,
@@ -343,7 +343,7 @@
 				82D4FE971BFD74CC0077D392 /* UserDefaultsConvertible+Swift.swift */,
 				82D4FEA11BFD93560077D392 /* UserDefaultsConvertible+Foundation.swift */,
 			);
-			path = NSUserDefaults;
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
