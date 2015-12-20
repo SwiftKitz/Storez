@@ -33,10 +33,12 @@ If you're looking to share code between you app and extensions, watchkit, apple 
 
 __Available Stores__
 
-| Store | Backend |
-|-------|---------|
-| `UserDefaultsStore` | `NSUserDefaults` |
-| `CacheStore` | `NSCache` |
+| Store | Backend | Subspec |
+|-------|---------|---------|
+| `UserDefaultsStore` | `NSUserDefaults` | `Storez/UserDefaults` |
+| `CacheStore` | `NSCache` | `Storez/Cache` |
+
+For all stores, simply use `pod "Storez"`
 
 __Type-safe, store-agnostic, nestable Key definitions__
 
@@ -150,7 +152,28 @@ struct MyKey<G: Namespace, V>: KeyType {
 
 ## Getting Started
 
-1. ... Cocoapods, Carthage, and better instructions coming soon.
+### Carthage
+
+[Carthage][carthage-link] is fully supported. Simply add the following line to your [Cartfile][cartfile-docs]:
+
+```ruby
+github "SwiftKitz/Storez" ~> 1.0.0
+```
+
+### Cocoapods
+
+[Cocoapods][cocoapods-link] is fully supported. You can choose which store you want to use (see above). Simply add the following line to your [Podfile][podfile-docs]:
+
+```ruby
+pod 'Storez/UserDefaults'
+```
+
+### Submodule
+
+For manual installation, you can grab the source directly or through git submodules, then simply:
+
++ Drop the `Storez.xcodeproj` file as a subproject (make sure `Copy resources` is __not__ enabled)
++ Navigate to your root project settings. Under "Embedded Binaries", click the "+" button and select the `Storez.framework`
 
 ## Motivation
 
