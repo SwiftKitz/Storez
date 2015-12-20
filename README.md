@@ -186,3 +186,9 @@ Mazyod ([@Mazyod](http://twitter.com/mazyod))
 ## License
 
 Storez is released under the MIT license. See LICENSE for details.
+
+
+[carthage-link]: https://github.com/Carthage/Carthage
+[cartfile-docs]: https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile
+[cocoapods-link]: https://cocoapods.org/
+[podfile-docs]: https://guides.cocoapods.org/syntax/podfile.html
