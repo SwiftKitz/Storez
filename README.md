@@ -160,9 +160,9 @@ struct MyKey<G: Namespace, V>: KeyType {
 github "SwiftKitz/Storez" ~> 1.0.0
 ```
 
-### Cocoapods
+### CocoaPods
 
-[Cocoapods][cocoapods-link] is fully supported. You can choose which store you want to use (see above). Simply add the following line to your [Podfile][podfile-docs]:
+[CocoaPods][cocoapods-link] is fully supported. You can choose which store you want to use (see above). Simply add the following line to your [Podfile][podfile-docs]:
 
 ```ruby
 pod 'Storez/UserDefaults'
