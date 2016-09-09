@@ -17,6 +17,6 @@ class StoreTests: XCTestCase {
         let id = "key-id"
         let key = Key<ChildNamespace, Void?>(id: id, defaultValue: nil)
         
-        XCTAssertEqual(key.stringValue, [ChildNamespace.key, key.id].joinWithSeparator(":"))
+        XCTAssertEqual(key.stringValue, [ChildNamespace.key, key.id].joined(separator: ":"))
     }
 }

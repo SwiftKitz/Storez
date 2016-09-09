@@ -11,7 +11,7 @@ import Foundation
 /** See ConvertibleValue for more information
 */
 public protocol UserDefaultsConvertible {
-    typealias UserDefaultsType: UserDefaultsSupportedType
+    associatedtype UserDefaultsType: UserDefaultsSupportedType
 
     static func decode(userDefaultsValue value: UserDefaultsType) -> Self?
     var encodeForUserDefaults: UserDefaultsType? { get }
@@ -22,11 +22,11 @@ struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsTran
     
     let value: T
     
-    var supportedType: NSData? {
-        return value.encodeForUserDefaults?.encode
+    var supportedType: Data? {
+        return value.encodeForUserDefaults?.encode as Data?
     }
     
-    init?(storedValue: NSData?) {
+    init?(storedValue: Data?) {
         
         guard let storedValue: T.UserDefaultsType = storedValue?.decode(),
             let value = T.decode(userDefaultsValue: storedValue)
@@ -44,15 +44,15 @@ struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsTran
 }
 
 
-struct UserDefaultsNullableConvertibleBox <T: Nullable where T.UnderlyingType: UserDefaultsConvertible>: UserDefaultsTransaction {
+struct UserDefaultsNullableConvertibleBox <T: Nullable>: UserDefaultsTransaction where T.UnderlyingType: UserDefaultsConvertible {
     
     let value: T
     
-    var supportedType: NSData? {
-        return value.wrappedValue?.encodeForUserDefaults?.encode
+    var supportedType: Data? {
+        return value.wrappedValue?.encodeForUserDefaults?.encode as Data?
     }
     
-    init?(storedValue: NSData?) {
+    init?(storedValue: Data?) {
         
         guard let data = storedValue,
             let userDefaultValue: T.UnderlyingType.UserDefaultsType = data.decode(),

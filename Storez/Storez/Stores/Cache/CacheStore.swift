@@ -11,7 +11,7 @@ import Foundation
 
 public final class CacheStore: Store {
         
-    public let cache = NSCache()
+    public let cache = NSCache<AnyObject, AnyObject>()
     
     public init() {}
     
@@ -19,30 +19,30 @@ public final class CacheStore: Store {
         cache.removeAllObjects()
     }
     
-    private func _read<K: KeyType, B: CacheTransaction where K.ValueType == B.ValueType>(key: K, boxType: B.Type) -> K.ValueType {
+    fileprivate func _read<K: KeyType, B: CacheTransaction>(_ key: K, boxType: B.Type) -> K.ValueType where K.ValueType == B.ValueType {
         
-        let object: AnyObject? = cache.objectForKey(key.stringValue)
+        let object: AnyObject? = cache.object(forKey: key.stringValue as AnyObject)
         return  boxType.init(storedValue: object)?.value ?? key.defaultValue
     }
     
-    private func _write<K: KeyType>(key: K, object: AnyObject?) {
+    fileprivate func _write<K: KeyType>(_ key: K, object: AnyObject?) {
         
         K.NamespaceType.preCommitHook()
         
         if let object = object {
-            cache.setObject(object, forKey: key.stringValue)
+            cache.setObject(object, forKey: key.stringValue as AnyObject)
         }
         else {
-            cache.removeObjectForKey(key.stringValue)
+            cache.removeObject(forKey: key.stringValue as AnyObject)
         }
         
         K.NamespaceType.postCommitHook()
     }
     
-    private func _set<K: KeyType, B: CacheTransaction where K.ValueType == B.ValueType>(key: K, box: B) {
+    fileprivate func _set<K: KeyType, B: CacheTransaction>(_ key: K, box: B) where K.ValueType == B.ValueType {
         
         let oldValue = _read(key, boxType: B.self)
-        let newValue = key.processChange(oldValue, newValue: box.value ?? key.defaultValue)
+        let newValue = key.processChange(oldValue, newValue: box.value)
         let newBox = B(newValue)
         
         key.willChange(oldValue, newValue: newValue)
@@ -50,35 +50,35 @@ public final class CacheStore: Store {
         key.didChange(oldValue, newValue: newValue)
     }
     
-    public func get<K: KeyType where K.ValueType: CacheSupportedType>(key: K) -> K.ValueType {
+    public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: CacheSupportedType {
         return _read(key, boxType: CacheSupportedBox.self)
     }
     
-    public func get<K: KeyType, V: CacheSupportedType where K.ValueType == V?>(key: K) -> V? {
+    public func get<K: KeyType, V: CacheSupportedType>(_ key: K) -> V? where K.ValueType == V? {
         return _read(key, boxType: CacheNullableSupportedBox.self)
     }
     
-    public func get<K: KeyType where K.ValueType: CacheConvertible>(key: K) -> K.ValueType {
+    public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: CacheConvertible {
         return _read(key, boxType: CacheConvertibleBox.self)
     }
     
-    public func get<K: KeyType, V: CacheConvertible where K.ValueType == V?>(key: K) -> V? {
+    public func get<K: KeyType, V: CacheConvertible>(_ key: K) -> V? where K.ValueType == V? {
         return _read(key, boxType: CacheNullableConvertibleBox.self)
     }
     
-    public func set<K: KeyType where K.ValueType: CacheSupportedType>(key: K, value: K.ValueType) {
+    public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: CacheSupportedType {
         _set(key, box: CacheSupportedBox(value))
     }
     
-    public func set<K: KeyType, V: CacheSupportedType where K.ValueType == V?>(key: K, value: V?) {
+    public func set<K: KeyType, V: CacheSupportedType>(_ key: K, value: V?) where K.ValueType == V? {
         _set(key, box: CacheNullableSupportedBox(value))
     }
     
-    public func set<K: KeyType where K.ValueType: CacheConvertible>(key: K, value: K.ValueType) {
+    public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: CacheConvertible {
         _set(key, box: CacheConvertibleBox(value))
     }
     
-    public func set<K: KeyType, V: CacheConvertible where K.ValueType == V?>(key: K, value: V?) {
+    public func set<K: KeyType, V: CacheConvertible>(_ key: K, value: V?) where K.ValueType == V? {
         _set(key, box: CacheNullableConvertibleBox(value))
     }
 }

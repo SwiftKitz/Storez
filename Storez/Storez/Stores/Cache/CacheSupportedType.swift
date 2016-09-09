@@ -36,7 +36,7 @@ struct CacheSupportedBox <T: CacheSupportedType>: CacheTransaction {
 }
 
 
-struct CacheNullableSupportedBox <T: Nullable where T.UnderlyingType: CacheSupportedType>: CacheTransaction {
+struct CacheNullableSupportedBox<T: Nullable>: CacheTransaction where T.UnderlyingType: CacheSupportedType {
     
     let value: T
     
@@ -57,3 +57,4 @@ struct CacheNullableSupportedBox <T: Nullable where T.UnderlyingType: CacheSuppo
         self.value = value
     }
 }
+

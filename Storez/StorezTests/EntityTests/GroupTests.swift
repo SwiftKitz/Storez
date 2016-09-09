@@ -18,7 +18,7 @@ class NamespaceTests: XCTestCase {
     
     func testNestedKeys() {
         
-        let expectedKey = [ChildNamespace.parent.key, ChildNamespace.id].joinWithSeparator(":")
+        let expectedKey = [ChildNamespace.parent.key, ChildNamespace.id].joined(separator: ":")
         XCTAssertEqual(ChildNamespace.key, expectedKey)
     }
 }

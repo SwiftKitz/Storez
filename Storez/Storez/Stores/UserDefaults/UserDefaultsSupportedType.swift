@@ -19,11 +19,11 @@ struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaults
     
     let value: T
     
-    var supportedType: NSData? {
-        return value.encode
+    var supportedType: Data? {
+        return value.encode as Data
     }
     
-    init?(storedValue: NSData?) {
+    init?(storedValue: Data?) {
         
         guard let value: T = storedValue?.decode() else {
             return nil
@@ -37,15 +37,15 @@ struct UserDefaultsSupportedTypeBox <T: UserDefaultsSupportedType>: UserDefaults
     }
 }
 
-struct UserDefaultsNullableSupportedTypeBox <T: Nullable where T.UnderlyingType: UserDefaultsSupportedType>: UserDefaultsTransaction {
+struct UserDefaultsNullableSupportedTypeBox <T: Nullable>: UserDefaultsTransaction where T.UnderlyingType: UserDefaultsSupportedType {
     
     let value: T
     
-    var supportedType: NSData? {
-        return value.wrappedValue?.encode
+    var supportedType: Data? {
+        return value.wrappedValue?.encode as Data?
     }
     
-    init?(storedValue: NSData?) {
+    init?(storedValue: Data?) {
         
         guard let data = storedValue, let value: T.UnderlyingType = data.decode() else {
             return nil

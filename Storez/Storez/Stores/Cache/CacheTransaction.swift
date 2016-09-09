@@ -8,7 +8,7 @@
 
 protocol CacheTransaction {
     
-    typealias ValueType
+    associatedtype ValueType
     
     var supportedType: AnyObject? { get }
     var value: ValueType { get }

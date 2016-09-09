@@ -13,15 +13,15 @@ import Foundation
 
 extension NSCoding {
     
-    var encode: NSData {
-        return NSKeyedArchiver.archivedDataWithRootObject(self)
+    var encode: Data {
+        return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 }
 
-extension NSData {
+extension Data {
     
     func decode<T>() -> T? {
-        return NSKeyedUnarchiver.unarchiveObjectWithData(self) as? T
+        return NSKeyedUnarchiver.unarchiveObject(with: self) as? T
     }
 }
 

@@ -9,7 +9,7 @@
 /** See ConvertibleValue for more info
 */
 public protocol CacheConvertible {
-    typealias CacheType: CacheSupportedType
+    associatedtype CacheType: CacheSupportedType
     
     static func decode(cacheValue value: CacheType) -> Self?
     var encodeForCache: CacheType? { get }
@@ -44,7 +44,7 @@ struct CacheConvertibleBox <T: CacheConvertible>: CacheTransaction {
 }
 
 
-struct CacheNullableConvertibleBox <T: Nullable where T.UnderlyingType: CacheConvertible>: CacheTransaction {
+struct CacheNullableConvertibleBox <T: Nullable>: CacheTransaction where T.UnderlyingType: CacheConvertible {
     
     let value: T
     
@@ -56,8 +56,9 @@ struct CacheNullableConvertibleBox <T: Nullable where T.UnderlyingType: CacheCon
         
         guard let cacheValue = storedValue as? T.UnderlyingType.CacheType,
             let value = T.UnderlyingType.decode(cacheValue: cacheValue)
-            else {
-                return nil
+            else
+        {
+           return nil
         }
         
         self.value = T(value)

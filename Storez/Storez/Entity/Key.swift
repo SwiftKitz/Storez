@@ -20,7 +20,7 @@ public struct Key<G: Namespace, V>: KeyType {
     public var changeBlock: ChangeBlock?
     
     public var stringValue: String {
-        return [NamespaceType.key, id].joinWithSeparator(":")
+        return [NamespaceType.key, id].joined(separator: ":")
     }
     
     // MARK: - Init & Dealloc
@@ -36,7 +36,7 @@ public struct Key<G: Namespace, V>: KeyType {
         self.changeBlock = changeBlock
     }
     
-    public func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType {
+    public func processChange(_ oldValue: ValueType, newValue: ValueType) -> ValueType {
         return changeBlock?(newValue) ?? newValue
     }
 }

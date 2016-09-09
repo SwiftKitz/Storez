@@ -17,7 +17,7 @@ public protocol Identifiable {
 */
 public protocol Namespace: Identifiable {
     
-    typealias parent: Identifiable = GlobalNamespace
+    associatedtype parent: Identifiable = GlobalNamespace
     
     static func preCommitHook()     /* Optional */
     static func postCommitHook()    /* Optional */
@@ -29,7 +29,7 @@ public extension Namespace {
         
         return [parent.id, id]
             .filter { !$0.isEmpty }
-            .joinWithSeparator(":")
+            .joined(separator: ":")
     }
     
     static func preCommitHook() {}

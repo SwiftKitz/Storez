@@ -11,21 +11,21 @@
 */
 public protocol KeyType {
     
-    typealias NamespaceType: Namespace
-    typealias ValueType
+    associatedtype NamespaceType: Namespace
+    associatedtype ValueType
     
     var stringValue: String { get }
     var defaultValue: ValueType { get }
     
     /* optional */
-    func willChange(oldValue: ValueType, newValue: ValueType)
-    func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType
-    func didChange(oldValue: ValueType, newValue: ValueType)
+    func willChange(_ oldValue: ValueType, newValue: ValueType)
+    func processChange(_ oldValue: ValueType, newValue: ValueType) -> ValueType
+    func didChange(_ oldValue: ValueType, newValue: ValueType)
 }
 
 public extension KeyType {
     
-    func willChange(oldValue: ValueType, newValue: ValueType) {}
-    func processChange(oldValue: ValueType, newValue: ValueType) -> ValueType { return newValue }
-    func didChange(oldValue: ValueType, newValue: ValueType) {}
+    func willChange(_ oldValue: ValueType, newValue: ValueType) {}
+    func processChange(_ oldValue: ValueType, newValue: ValueType) -> ValueType { return newValue }
+    func didChange(_ oldValue: ValueType, newValue: ValueType) {}
 }

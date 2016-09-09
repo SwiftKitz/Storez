@@ -14,11 +14,11 @@ import Foundation
 extension Int: UserDefaultsConvertible {
     
     public static func decode(userDefaultsValue value: NSNumber) -> Int? {
-        return value.integerValue
+        return value.intValue
     }
     
     public var encodeForUserDefaults: NSNumber? {
-        return NSNumber(integer: self)
+        return NSNumber(value: self as Int)
     }
 }
 
@@ -29,7 +29,7 @@ extension Double: UserDefaultsConvertible {
     }
     
     public var encodeForUserDefaults: NSNumber? {
-        return NSNumber(double: self)
+        return NSNumber(value: self as Double)
     }
 }
 
@@ -40,7 +40,7 @@ extension Bool: UserDefaultsConvertible {
     }
     
     public var encodeForUserDefaults: NSNumber? {
-        return NSNumber(bool: self)
+        return NSNumber(value: self as Bool)
     }
 }
 
@@ -51,7 +51,7 @@ extension Float: UserDefaultsConvertible {
     }
     
     public var encodeForUserDefaults: NSNumber? {
-        return NSNumber(float: self)
+        return NSNumber(value: self as Float)
     }
 }
 

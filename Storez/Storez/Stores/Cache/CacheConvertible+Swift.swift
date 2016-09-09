@@ -74,3 +74,4 @@ extension String: CacheConvertible {
         return self as AnyObject
     }
 }
+

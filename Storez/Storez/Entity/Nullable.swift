@@ -7,11 +7,10 @@
 //
 
 public protocol Nullable {
-    typealias UnderlyingType
+    associatedtype UnderlyingType
     
     var wrappedValue: UnderlyingType? { get }
     
-    init()
     init(_ some: UnderlyingType)
 }
 

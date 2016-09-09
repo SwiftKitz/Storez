@@ -10,11 +10,11 @@ import Foundation
 
 protocol UserDefaultsTransaction {
     
-    typealias ValueType
+    associatedtype ValueType
     
-    var supportedType: NSData? { get }
+    var supportedType: Data? { get }
     var value: ValueType { get }
     
-    init?(storedValue: NSData?)
+    init?(storedValue: Data?)
     init(_ value: ValueType)
 }

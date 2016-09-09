@@ -92,7 +92,7 @@ class CacheStoreTests: XCTestCase {
     func testChangeBlockIsTriggered() {
         
         let changingKey = Key<GlobalNamespace, String?>(id: "changing-object", defaultValue: nil) {
-            return [$0, "Heisenburg"].flatMap { $0 }.joinWithSeparator(" ")
+            return [$0, "Heisenburg"].flatMap { $0 }.joined(separator: " ")
         }
         
         store.set(changingKey, value: "say my name!")
@@ -117,14 +117,14 @@ class CacheStoreTests: XCTestCase {
     
     func testGetterPerformance() {
         
-        self.measureBlock {
-            self.store.get(TestNamespace.anyKey)
+        self.measure {
+            let _ = self.store.get(TestNamespace.anyKey)
         }
     }
     
     func testSetterPerformance() {
         
-        self.measureBlock {
+        self.measure {
             self.store.set(TestNamespace.anyKey, value: "more testing")
         }
     }
