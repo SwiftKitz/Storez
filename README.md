@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-2.0.0-blue.svg" />
+  <img alt="Version" src="https://img.shields.io/badge/version-2.0.1-blue.svg" />
   <a alt="Travis CI" href="https://travis-ci.org/SwiftKitz/Storez">
     <img alt="Version" src="https://travis-ci.org/SwiftKitz/Storez.svg?branch=master" />
   </a>
