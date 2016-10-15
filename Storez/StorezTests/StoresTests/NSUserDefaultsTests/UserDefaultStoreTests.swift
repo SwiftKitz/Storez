@@ -12,7 +12,7 @@ import Storez
 
 class UserDefaultsStoreTests: XCTestCase {
     
-    let store = UserDefaultsStore(suite: "io.kitz.storez.test")
+    let store = UserDefaultsStore(suite: "io.kitz.storez.test-\(arc4random_uniform(999_999_999))")
     
     
     override func setUp() {
@@ -22,7 +22,7 @@ class UserDefaultsStoreTests: XCTestCase {
     }
     
     func testUserDefaultValueTypes() {
-        
+
         let arrayKey = Key<GlobalNamespace, NSArray>(id: "array", defaultValue: [1])
         let array: NSArray = [1, 2, 3]
         
