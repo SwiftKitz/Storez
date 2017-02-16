@@ -523,8 +523,12 @@
 					823F18A01BF43D1C008DF5F8 = {
 						CreatedOnToolsVersion = 7.1.1;
 					};
+					8274FA991BECCCDA0015214B = {
+						LastSwiftMigration = 0810;
+					};
 					828217E61BEC645800EFDDB4 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0810;
 					};
 					828217F01BEC645800EFDDB4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -879,6 +883,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
@@ -899,6 +904,7 @@
 				PRODUCT_NAME = Storez;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
@@ -1015,6 +1021,7 @@
 				PRODUCT_NAME = Storez;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1033,6 +1040,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.kitz.Storez;
 				PRODUCT_NAME = Storez;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
