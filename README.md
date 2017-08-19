@@ -11,7 +11,7 @@
   <a alt="Travis CI" href="https://travis-ci.org/SwiftKitz/Storez">
     <img alt="Version" src="https://travis-ci.org/SwiftKitz/Storez.svg?branch=master" />
   </a>
-  <img alt="Swift" src="https://img.shields.io/badge/swift-3.0-orange.svg" />
+  <img alt="Swift" src="https://img.shields.io/badge/swift-4.0-orange.svg" />
   <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg" />
   <a alt="Carthage Compatible" href="https://github.com/SwiftKitz/Notificationz#carthage">
     <img alt="Carthage" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
@@ -55,7 +55,7 @@ kingdom.stringValue // "animals:mammals"
 struct Cats: Namespace {
     typealias parent = Animals
     static let id = "cats"
-    
+
     // Namespaces also have pre and post commit hooks
     func preCommitHook() { /* custom code */ }
     func postCommitHook() { /* custom code */ }
@@ -101,15 +101,15 @@ struct CustomObject {
 
 // You can guarentee they work for a specific store implementation by
 // conforming to the store convertible protocol. In this case,
-// NSUserDefaults requires the custom object can be converted to and 
+// NSUserDefaults requires the custom object can be converted to and
 // from a supported Underlying type. (see UserDefaultsValueTypes.swift)
 extension CustomObject: UserDefaultsConvertible {
-    
+
     // We want to serialize this struct as NSString
     static func decode(userDefaultsValue value: NSString) -> CustomObject? {
         return self.init(strings: value.componentsSeparatedByString(";"))
     }
-    
+
     var encodeForUserDefaults: NSString? {
         return strings.joinWithSeparator(";")
     }
@@ -122,7 +122,7 @@ let customObject = CustomObject(
 
 // let's add a processing block this time
 let CustomValue = Key<GlobalNamespace, CustomObject?>(id: "custom", defaultValue: nil) {
-    
+
     var processedValue = $0
     processedValue?.strings.append("blank!")
     return processedValue
@@ -137,13 +137,13 @@ __Make your own `KeyType`__
 ```swift
 // For example, make an key that emits NSNotifications
 struct MyKey<G: Namespace, V>: KeyType {
-    
+
     typealias NamespaceType = G
     typealias ValueType = V
-    
+
     var stringValue: String
     var defaultValue: ValueType
-    
+
     func didChange(oldValue: ValueType, newValue: ValueType) {
         NSNotificationCenter.defaultCenter().postNotificationName(stringValue, object: nil)
     }
