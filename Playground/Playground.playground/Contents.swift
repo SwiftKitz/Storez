@@ -65,13 +65,13 @@ struct CustomObject {
 // from a supported Underlying type. (see UserDefaultsValueTypes.swift)
 extension CustomObject: UserDefaultsConvertible {
     
-    // We want to serialize this struct as NSString
+    // We want to serialize this struct as String
     static func decode(userDefaultsValue value: NSString) -> CustomObject? {
-        return self.init(strings: value.componentsSeparatedByString(";"))
+        return self.init(strings: value.components(separatedBy: ";"))
     }
     
     var encodeForUserDefaults: NSString? {
-        return strings.joinWithSeparator(";")
+        return String(strings.joined(separator: ";")) as NSString?
     }
 }
 
@@ -89,7 +89,7 @@ let CustomValue = Key<GlobalNamespace, CustomObject?>(id: "custom", defaultValue
 }
 
 store.set(CustomValue, value: customObject)
-store.get(CustomValue)?.strings.joinWithSeparator(" ") // fill in the blank!
+store.get(CustomValue)?.strings.joined(separator: " ") // fill in the blank!
 
 //: Make your own `KeyType`
 
@@ -103,7 +103,7 @@ struct MyKey<G: Namespace, V>: KeyType {
     var defaultValue: ValueType
     
     func didChange(oldValue: ValueType, newValue: ValueType) {
-        NSNotificationCenter.defaultCenter().postNotificationName(stringValue, object: nil)
+        NotificationCenter.default.post(name: .init(stringValue), object: nil)
     }
 }
 

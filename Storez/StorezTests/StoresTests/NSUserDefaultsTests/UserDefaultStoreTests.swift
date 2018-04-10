@@ -93,7 +93,7 @@ class UserDefaultsStoreTests: XCTestCase {
     func testChangeBlockIsTriggered() {
         
         let changingKey = Key<GlobalNamespace, String?>(id: "changing-object", defaultValue: nil) {
-            return [$0, "Heisenburg"].flatMap { $0 }.joined(separator: " ")
+            return [$0, "Heisenburg"].compactMap { $0 }.joined(separator: " ")
         }
 
         store.set(changingKey, value: "say my name!")
