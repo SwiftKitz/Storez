@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Storez"
-  s.version      = "2.0.2"
+  s.version      = "2.1.0"
   s.summary      = "Safe, statically-typed, store-agnostic key-value storage!"
   s.description  = <<-DESC
                    Provides an extremely flexible way to implement a statically
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "http://kitz.io"
   s.license      = "MIT"
-  s.source       = { :git => "https://github.com/SwiftKitz/Storez.git", :tag => "v2.0.2" }
+  s.source       = { :git => "https://github.com/SwiftKitz/Storez.git", :tag => "v2.1.0" }
   s.author             = { "Maz Jaleel" => "mazjaleel@gmail.com" }
   s.social_media_url   = "http://twitter.com/SwiftKitz"
 
