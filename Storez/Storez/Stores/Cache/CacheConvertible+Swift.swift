@@ -10,20 +10,6 @@ import Foundation
 
 /** Adding support to Swift types
 */
-extension Optional: UserDefaultsConvertible where Wrapped: UserDefaultsConvertible {
-
-    public typealias UserDefaultsValueType = Wrapped
-    public typealias UserDefaultsType = Wrapped.UserDefaultsType
-
-    public static func decode(userDefaultsValue value: Wrapped.UserDefaultsType) -> Optional<Wrapped>? {
-        return Wrapped.decode(userDefaultsValue: value)
-    }
-
-    public var encodeForUserDefaults: Wrapped.UserDefaultsType? {
-        return wrappedValue?.encodeForUserDefaults
-    }
-}
-
 extension Int: CacheConvertible {
     
     public typealias CacheType = AnyObject
