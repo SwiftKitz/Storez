@@ -60,11 +60,7 @@ public final class UserDefaultsStore: Store {
     public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: UserDefaultsConvertible {
         return _read(key, boxType: UserDefaultsConvertibleBox.self)
     }
-    
-    public func get<K: KeyType, V: UserDefaultsConvertible>(_ key: K) -> V? where K.ValueType == V? {
-        return _read(key, boxType: UserDefaultsNullableConvertibleBox.self)
-    }
-    
+
     public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: UserDefaultsSupportedType {
         return _read(key, boxType: UserDefaultsSupportedTypeBox.self)
     }
@@ -76,11 +72,7 @@ public final class UserDefaultsStore: Store {
     public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: UserDefaultsConvertible {
         _set(key, box: UserDefaultsConvertibleBox(value))
     }
-    
-    public func set<K: KeyType, V: UserDefaultsConvertible>(_ key: K, value: V?) where K.ValueType == V? {
-        _set(key, box: UserDefaultsNullableConvertibleBox(value))
-    }
-    
+
     public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: UserDefaultsSupportedType {
         _set(key, box: UserDefaultsSupportedTypeBox(value))
     }

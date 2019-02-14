@@ -42,29 +42,3 @@ struct UserDefaultsConvertibleBox <T: UserDefaultsConvertible>: UserDefaultsTran
         self.value = value
     }
 }
-
-
-struct UserDefaultsNullableConvertibleBox <T: Nullable>: UserDefaultsTransaction where T.UnderlyingType: UserDefaultsConvertible {
-    
-    let value: T
-    
-    var supportedType: Data? {
-        return value.wrappedValue?.encodeForUserDefaults?.encode as Data?
-    }
-    
-    init?(storedValue: Data?) {
-        
-        guard let data = storedValue,
-            let userDefaultValue: T.UnderlyingType.UserDefaultsType = data.decode(),
-            let value = T.UnderlyingType.decode(userDefaultsValue: userDefaultValue)
-            else {
-            return nil
-        }
-        
-        self.value = T(value)
-    }
-    
-    init(_ value: T) {
-        self.value = value
-    }
-}
