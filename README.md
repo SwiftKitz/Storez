@@ -7,11 +7,11 @@
 </h1>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-2.0.2-blue.svg" />
+  <img alt="Version" src="https://img.shields.io/badge/version-2.1.1-blue.svg" />
   <a alt="Travis CI" href="https://travis-ci.org/SwiftKitz/Storez">
     <img alt="Version" src="https://travis-ci.org/SwiftKitz/Storez.svg?branch=master" />
   </a>
-  <img alt="Swift" src="https://img.shields.io/badge/swift-4.1-orange.svg" />
+  <img alt="Swift" src="https://img.shields.io/badge/swift-4.2-orange.svg" />
   <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg" />
   <a alt="Carthage Compatible" href="https://github.com/SwiftKitz/Notificationz#carthage">
     <img alt="Carthage" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
