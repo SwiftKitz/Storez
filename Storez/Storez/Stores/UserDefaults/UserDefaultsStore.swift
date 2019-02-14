@@ -69,7 +69,7 @@ public final class UserDefaultsStore: Store {
         return _read(key, boxType: UserDefaultsSupportedTypeBox.self)
     }
     
-    public func get<K: KeyType, V: NSCoding>(_ key: K) -> V? where K.ValueType == V? {
+    public func get<K: KeyType, V: UserDefaultsSupportedType>(_ key: K) -> V? where K.ValueType == V? {
         return _read(key, boxType: UserDefaultsNullableSupportedTypeBox.self)
     }
     
@@ -81,11 +81,11 @@ public final class UserDefaultsStore: Store {
         _set(key, box: UserDefaultsNullableConvertibleBox(value))
     }
     
-    public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: NSCoding {
+    public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: UserDefaultsSupportedType {
         _set(key, box: UserDefaultsSupportedTypeBox(value))
     }
     
-    public func set<K: KeyType, V: NSCoding>(_ key: K, value: V?) where K.ValueType == V? {
+    public func set<K: KeyType, V: UserDefaultsSupportedType>(_ key: K, value: V?) where K.ValueType == V? {
         _set(key, box: UserDefaultsNullableSupportedTypeBox(value))
     }
 }
