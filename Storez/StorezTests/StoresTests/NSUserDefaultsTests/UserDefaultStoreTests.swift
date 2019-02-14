@@ -62,8 +62,18 @@ class UserDefaultsStoreTests: XCTestCase {
         
         let text = Key<GlobalNamespace, String>(id: "text", defaultValue: "default")
         let value = "testing-string-🇦🇪"
-        
+
         XCTAssertEqual(store.get(text), "default")
+        store.set(text, value: value)
+        XCTAssertEqual(store.get(text), value)
+    }
+
+    func testOptionalStringType() {
+
+        let text = Key<GlobalNamespace, String?>(id: "text", defaultValue: nil)
+        let value = "testing-string-🇦🇪"
+
+        XCTAssertEqual(store.get(text), nil)
         store.set(text, value: value)
         XCTAssertEqual(store.get(text), value)
     }
