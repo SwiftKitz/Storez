@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                    choice.
                    DESC
 
-  s.homepage     = "http://kitz.io"
+  s.homepage     = "http://swiftkitz.github.io"
   s.license      = "MIT"
   s.source       = { :git => "https://github.com/SwiftKitz/Storez.git", :tag => "v2.1.1" }
   s.author             = { "Maz Jaleel" => "mazjaleel@gmail.com" }

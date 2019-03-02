@@ -36,6 +36,9 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(dateKey), nil)
         store.set(dateKey, value: date)
         XCTAssertEqual(store.get(dateKey), date)
+        // can be set back to nil
+        store.set(dateKey, value: nil)
+        XCTAssertEqual(store.get(dateKey), nil)
     }
     
     func testNSCodingConformingTypes() {
@@ -76,6 +79,9 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(text), nil)
         store.set(text, value: value)
         XCTAssertEqual(store.get(text), value)
+        // can be set back to nil
+        store.set(text, value: nil)
+        XCTAssertEqual(store.get(text), nil)
     }
     
     func testCustomObjectType() {
