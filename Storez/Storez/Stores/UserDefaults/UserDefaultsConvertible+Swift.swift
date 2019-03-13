@@ -80,3 +80,13 @@ extension String: UserDefaultsConvertible {
     }
 }
 
+extension Date: UserDefaultsConvertible {
+
+    public static func decode(userDefaultsValue value: NSDate) -> Date? {
+        return value as Date
+    }
+
+    public var encodeForUserDefaults: NSDate? {
+        return self as NSDate
+    }
+}
