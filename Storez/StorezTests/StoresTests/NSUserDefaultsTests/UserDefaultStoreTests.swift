@@ -160,12 +160,14 @@ class UserDefaultsStoreTests: XCTestCase {
         let legacyBool = Key<GlobalNamespace, NSNumber>(id: "bol", defaultValue: .init(value: true))
         let legacyString = Key<GlobalNamespace, NSString>(id: "str", defaultValue: "yes")
         let legacyDate = Key<GlobalNamespace, NSDate>(id: "dat", defaultValue: refDate)
+        let legacyOptional = Key<GlobalNamespace, NSString?>(id: "opt", defaultValue: nil)
         // codable keys
         let int = Key<GlobalNamespace, Int>(id: "int", defaultValue: 2)
         let double = Key<GlobalNamespace, Double>(id: "dbl", defaultValue: 2.2)
         let bool = Key<GlobalNamespace, Bool>(id: "bol", defaultValue: false)
         let string = Key<GlobalNamespace, String>(id: "str", defaultValue: "no")
         let date = Key<GlobalNamespace, Date>(id: "dat", defaultValue: Date())
+        let optional = Key<GlobalNamespace, String?>(id: "opt", defaultValue: nil)
 
         // write to legacy keys
         store.set(legacyInt, value: legacyInt.defaultValue)
@@ -173,6 +175,7 @@ class UserDefaultsStoreTests: XCTestCase {
         store.set(legacyBool, value: legacyBool.defaultValue)
         store.set(legacyString, value: legacyString.defaultValue)
         store.set(legacyDate, value: legacyDate.defaultValue)
+        store.set(legacyOptional, value: "some")
 
         // read from codable keys
         XCTAssertEqual(store.get(int), legacyInt.defaultValue.intValue)
@@ -180,5 +183,6 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(store.get(bool), legacyBool.defaultValue.boolValue)
         XCTAssertEqual(store.get(string), legacyString.defaultValue as String)
         XCTAssertEqual(store.get(date), legacyDate.defaultValue as Date)
+        XCTAssertEqual(store.get(optional), "some")
     }
 }

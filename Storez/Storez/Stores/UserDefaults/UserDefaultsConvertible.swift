@@ -104,17 +104,17 @@ private func _decodeLegacyType<T>(_ type: T.Type, data: Data) -> Data? {
     }
 
     switch type {
-    case is Int.Type:
+    case is Int.Type, is Int?.Type:
         return (data.decode() as NSNumber?).flatMap { wrap($0.intValue) }
-    case is Double.Type:
+    case is Double.Type, is Double?.Type:
         return (data.decode() as NSNumber?).flatMap { wrap($0.doubleValue) }
-    case is Float.Type:
+    case is Float.Type, is Float?.Type:
         return (data.decode() as NSNumber?).flatMap { wrap($0.floatValue) }
-    case is Bool.Type:
+    case is Bool.Type, is Bool?.Type:
         return (data.decode() as NSNumber?).flatMap { wrap($0.boolValue) }
-    case is String.Type:
+    case is String.Type, is String?.Type:
         return (data.decode() as NSString?).flatMap { wrap($0 as String) }
-    case is Date.Type:
+    case is Date.Type, is Date?.Type:
         return (data.decode() as NSDate?).flatMap { wrap($0 as Date) }
     default:
         return nil
