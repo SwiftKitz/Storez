@@ -29,6 +29,32 @@ In case you just want to use stuff, the framework is shipped with pre-configured
 + __Portability, Check!:__<br />
 If you're looking to share code between you app and extensions, watchkit, apple watch, you're covered! You can use the `NSUserDefaults` store, just set your shared container identifier as the suite name.
 
+**Example:**
+
+```swift
+final class WeatherService {
+
+  private enum Keys: Namespace {
+    static let id = "weather-service"
+    static let temperature = Key<Keys, Double>(id: "temp", defaultValue: 0.0)
+  }
+
+  private let store: UserDefaultsStore
+  
+  var temperature: Double {
+    return store.get(Keys.temperature)
+  }
+
+  init(store: UserDefaultsStore) {
+    self.store = store
+  }
+
+  func weatherUpdate(temperature: Double) {
+    store.set(Keys.temperature, temperature)
+  }
+}
+```
+
 ## Features
 
 __Available Stores__
