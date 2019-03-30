@@ -10,6 +10,8 @@ import Foundation
 
 
 public final class UserDefaultsStore: Store {
+
+    // MARK: - Properties
     
     public let defaults: UserDefaults
     
@@ -21,13 +23,14 @@ public final class UserDefaultsStore: Store {
     
     // MARK: - Private methods
     
-    fileprivate func _read<K: KeyType, B: UserDefaultsTransaction>(_ key: K, boxType: B.Type) -> K.ValueType where K.ValueType == B.ValueType {
+    private func _read<K: KeyType, B: UserDefaultsTransaction>(_ key: K, boxType: B.Type)
+        -> K.ValueType where K.ValueType == B.ValueType {
         
         let data = defaults.object(forKey: key.stringValue) as? Data
         return boxType.init(storedValue: data)?.value ?? key.defaultValue
     }
     
-    fileprivate func _write<K: KeyType>(_ key: K, data: Data?) {
+    private func _write<K: KeyType>(_ key: K, data: Data?) {
         
         K.NamespaceType.preCommitHook()
         
@@ -37,7 +40,8 @@ public final class UserDefaultsStore: Store {
         K.NamespaceType.postCommitHook()
     }
     
-    fileprivate func _set<K: KeyType, B: UserDefaultsTransaction>(_ key: K, box: B) where K.ValueType == B.ValueType {
+    private func _set<K: KeyType, B: UserDefaultsTransaction>(_ key: K, box: B)
+        where K.ValueType == B.ValueType {
         
         let oldValue = _read(key, boxType: B.self)
         let newValue = key.processChange(oldValue, newValue: box.value)
@@ -68,7 +72,11 @@ public final class UserDefaultsStore: Store {
     public func get<K: KeyType, V: UserDefaultsSupportedType>(_ key: K) -> V? where K.ValueType == V? {
         return _read(key, boxType: UserDefaultsNullableSupportedTypeBox.self)
     }
-    
+
+    public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: Codable {
+        return _read(key, boxType: UserDefaultsCodableBox.self)
+    }
+
     public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: UserDefaultsConvertible {
         _set(key, box: UserDefaultsConvertibleBox(value))
     }
@@ -79,6 +87,10 @@ public final class UserDefaultsStore: Store {
     
     public func set<K: KeyType, V: UserDefaultsSupportedType>(_ key: K, value: V?) where K.ValueType == V? {
         _set(key, box: UserDefaultsNullableSupportedTypeBox(value))
+    }
+
+    public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: Codable {
+        _set(key, box: UserDefaultsCodableBox(value))
     }
 }
 

@@ -40,6 +40,26 @@ class UserDefaultsStoreTests: XCTestCase {
         store.set(dateKey, value: nil)
         XCTAssertEqual(store.get(dateKey), nil)
     }
+
+    func testCodableTypes() {
+
+        struct Test: Codable, Equatable {
+            let x: Int
+        }
+
+        let testKey = Key<GlobalNamespace, Test>(id: "codable", defaultValue: Test(x: 0))
+
+        XCTAssertEqual(store.get(testKey), Test(x: 0))
+        store.set(testKey, value: Test(x: 9))
+        XCTAssertEqual(store.get(testKey), Test(x: 9))
+
+        let date = Date(timeIntervalSinceNow: 20)
+        let dateKey = Key<GlobalNamespace, Date>(id: "codable", defaultValue: date)
+
+        XCTAssertEqual(store.get(dateKey), date)
+        store.set(dateKey, value: date.addingTimeInterval(2))
+        XCTAssertEqual(store.get(dateKey), date.addingTimeInterval(2))
+    }
     
     func testNSCodingConformingTypes() {
         
@@ -131,19 +151,34 @@ class UserDefaultsStoreTests: XCTestCase {
         store.set(TestNamespace.anyKey, value: "test")
         XCTAssertEqual(TestNamespace.postCommitCalls, 1)
     }
-    
-    func testGetterPerformance() {
-        
-        self.measure {
-            let _ = self.store.get(TestNamespace.anyKey)
-        }
+
+    func testLegacyCodableConverters() {
+        // legacy keys
+        let refDate = NSDate(timeIntervalSinceReferenceDate: 20)
+        let legacyInt = Key<GlobalNamespace, NSNumber>(id: "int", defaultValue: .init(value: 1))
+        let legacyDouble = Key<GlobalNamespace, NSNumber>(id: "dbl", defaultValue: .init(value: 1.2))
+        let legacyBool = Key<GlobalNamespace, NSNumber>(id: "bol", defaultValue: .init(value: true))
+        let legacyString = Key<GlobalNamespace, NSString>(id: "str", defaultValue: "yes")
+        let legacyDate = Key<GlobalNamespace, NSDate>(id: "dat", defaultValue: refDate)
+        // codable keys
+        let int = Key<GlobalNamespace, Int>(id: "int", defaultValue: 2)
+        let double = Key<GlobalNamespace, Double>(id: "dbl", defaultValue: 2.2)
+        let bool = Key<GlobalNamespace, Bool>(id: "bol", defaultValue: false)
+        let string = Key<GlobalNamespace, String>(id: "str", defaultValue: "no")
+        let date = Key<GlobalNamespace, Date>(id: "dat", defaultValue: Date())
+
+        // write to legacy keys
+        store.set(legacyInt, value: legacyInt.defaultValue)
+        store.set(legacyDouble, value: legacyDouble.defaultValue)
+        store.set(legacyBool, value: legacyBool.defaultValue)
+        store.set(legacyString, value: legacyString.defaultValue)
+        store.set(legacyDate, value: legacyDate.defaultValue)
+
+        // read from codable keys
+        XCTAssertEqual(store.get(int), legacyInt.defaultValue.intValue)
+        XCTAssertEqual(store.get(double), legacyDouble.defaultValue.doubleValue)
+        XCTAssertEqual(store.get(bool), legacyBool.defaultValue.boolValue)
+        XCTAssertEqual(store.get(string), legacyString.defaultValue as String)
+        XCTAssertEqual(store.get(date), legacyDate.defaultValue as Date)
     }
-    
-    func testSetterPerformance() {
-        
-        self.measure {
-            self.store.set(TestNamespace.anyKey, value: "more testing")
-        }
-    }
-    
 }

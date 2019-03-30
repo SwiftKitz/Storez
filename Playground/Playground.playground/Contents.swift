@@ -55,24 +55,8 @@ store.get(nonnull).isEmpty  // true
 
 //: Custom objects easily supported!
 
-struct CustomObject {
+struct CustomObject: Codable {
     var strings: [String]
-}
-
-// You can guarentee they work for a specific store implementation by
-// conforming to the store convertible protocol. In this case,
-// NSUserDefaults requires the custom object can be converted to and 
-// from a supported Underlying type. (see UserDefaultsValueTypes.swift)
-extension CustomObject: UserDefaultsConvertible {
-    
-    // We want to serialize this struct as String
-    static func decode(userDefaultsValue value: NSString) -> CustomObject? {
-        return self.init(strings: value.components(separatedBy: ";"))
-    }
-    
-    var encodeForUserDefaults: NSString? {
-        return String(strings.joined(separator: ";")) as NSString?
-    }
 }
 
 // custom objects properly serialized/deserialized
