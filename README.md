@@ -7,15 +7,12 @@
 </h1>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-3.0.1-blue.svg" />
-  <a alt="Travis CI" href="https://travis-ci.org/SwiftKitz/Storez">
-    <img alt="Version" src="https://travis-ci.org/SwiftKitz/Storez.svg?branch=master" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.0.0-blue.svg" />
+  <a alt="Github CI" href="https://github.com/SwiftKitz/Storez/actions">
+    <img alt="Version" src="https://github.com/SwiftKitz/Storez/workflows/Swift/badge.svg" />
   </a>
-  <img alt="Swift" src="https://img.shields.io/badge/swift-5.0-orange.svg" />
+  <img alt="Swift" src="https://img.shields.io/badge/swift-5.2-orange.svg" />
   <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg" />
-  <a alt="Carthage Compatible" href="https://github.com/SwiftKitz/Notificationz#carthage">
-    <img alt="Carthage" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
-  </a>
 </p>
 
 ## Highlights
@@ -166,12 +163,10 @@ struct MyKey<G: Namespace, V>: KeyType {
 
 ## Getting Started
 
-### Carthage
+### Swift Package Manager
 
-[Carthage][carthage-link] is fully supported. Simply add the following line to your [Cartfile][cartfile-docs]:
-
-```ruby
-github "SwiftKitz/Storez"
+```
+TODO: Write me
 ```
 
 ### CocoaPods
@@ -181,13 +176,6 @@ github "SwiftKitz/Storez"
 ```ruby
 pod 'Storez/UserDefaults'
 ```
-
-### Submodule
-
-For manual installation, you can grab the source directly or through git submodules, then simply:
-
-+ Drop the `Storez.xcodeproj` file as a subproject (make sure `Copy resources` is __not__ enabled)
-+ Navigate to your root project settings. Under "Embedded Binaries", click the "+" button and select the `Storez.framework`
 
 ## Motivation
 
