@@ -30,16 +30,16 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Core' do |cc|
-    cc.source_files = 'Storez/Storez/Entity/*'
+    cc.source_files = 'Sources/Storez/Entity/*'
   end
 
   s.subspec 'UserDefaults' do |cu|
-    cu.source_files   = 'Storez/Storez/Stores/UserDefaults/*'
+    cu.source_files   = 'Sources/Storez/Stores/UserDefaults/*'
     cu.dependency 'Storez/Core'
   end
 
   s.subspec 'Cache' do |cc|
-    cc.source_files   = 'Storez/Storez/Stores/Cache/*'
+    cc.source_files   = 'Sources/Storez/Stores/Cache/*'
     cc.dependency 'Storez/Core'
   end
 end
