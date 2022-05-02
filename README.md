@@ -165,9 +165,21 @@ struct MyKey<G: Namespace, V>: KeyType {
 
 ### Swift Package Manager
 
+#### You can add Storez to an Xcode project by adding it as a package dependency.
+
+- In Xcode, from the File menu, select Add Packages...
+- Enter "https://github.com/SwiftKitz/Storez" into the package repository URL text field
+
+Depending on how your project is structured:
+- If you have a single application target that needs access to the library, then add Storez directly to your application.
+- If you want to use this library from multiple Xcode targets, or mixing Xcode targets and SPM targets, you likely want to create a shared framework that depends on Storez and then depend on that framework in all of your targets.
+
+#### To use Storez in a Package.swift file, add this to the `dependencies:` section.
+
+```swift
+.package(url: "https://github.com/SwiftKitz/Storez.git", .upToNextMinor(from: "3.0.0")),
 ```
-TODO: Write me
-```
+
 
 ### CocoaPods
 
