@@ -12,7 +12,7 @@ public struct Key<G: Namespace, V>: KeyType {
     public typealias NamespaceType = G
     public typealias ValueType = V
     
-    public typealias ChangeBlock = (ValueType) -> (ValueType)
+    public typealias ChangeBlock = @Sendable (ValueType) -> (ValueType)
     
     
     public var id: String
@@ -41,4 +41,4 @@ public struct Key<G: Namespace, V>: KeyType {
     }
 }
 
-extension Key: @unchecked Sendable where V: Sendable {}
+extension Key: Sendable where V: Sendable {}

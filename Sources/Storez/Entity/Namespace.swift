@@ -38,6 +38,6 @@ public extension Namespace {
 
 // Convenience Global group
 
-public struct GlobalNamespace: Namespace {
+public struct GlobalNamespace: Namespace, Sendable {
     public static let id = ""
 }
