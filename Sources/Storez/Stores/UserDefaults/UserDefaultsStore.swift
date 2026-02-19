@@ -17,8 +17,8 @@ public final class UserDefaultsStore: Store, @unchecked Sendable {
     
     // MARK: - Init & Dealloc
     
-    public init(suite: String?) {
-        defaults = UserDefaults(suiteName: suite)!
+    public init(suite: String? = nil) {
+        defaults = UserDefaults(suiteName: suite) ?? .standard
     }
     
     // MARK: - Private methods

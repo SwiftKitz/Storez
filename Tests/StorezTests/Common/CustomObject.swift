@@ -28,10 +28,10 @@ struct CustomObject {
     }
 }
 
-extension CustomObject: Equatable {}
-
-func ==(lhs: CustomObject, rhs: CustomObject) -> Bool {
-    return lhs.title == rhs.title && lhs.year == rhs.year
+extension CustomObject: Equatable {
+    static func ==(lhs: CustomObject, rhs: CustomObject) -> Bool {
+        return lhs.title == rhs.title && lhs.year == rhs.year
+    }
 }
 
 

@@ -12,7 +12,7 @@ import Storez
 
 class UserDefaultsStoreTests: XCTestCase {
     
-    let store = UserDefaultsStore(suite: "io.kitz.storez.test-\(arc4random_uniform(999_999_999))")
+    let store = UserDefaultsStore(suite: "io.kitz.storez.test-\(Int.random(in: 0..<999_999_999))")
     
     
     override func setUp() {
