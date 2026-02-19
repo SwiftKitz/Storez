@@ -21,9 +21,7 @@ struct CacheConvertibleBox <T: CacheConvertible>: CacheTransaction {
     let value: T
     
     var supportedType: AnyObject? {
-        // FIXME: Compiler crash
-        let anyObject: AnyObject? = value.encodeForCache
-        return anyObject
+        return value.encodeForCache
     }
     
     init?(storedValue: AnyObject?) {

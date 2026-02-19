@@ -16,9 +16,7 @@ struct CacheSupportedBox <T: CacheSupportedType>: CacheTransaction {
     let value: T
     
     var supportedType: AnyObject? {
-        // FIXME: Compiler crash
-        let anyObject: AnyObject? = value
-        return anyObject
+        return value
     }
     
     init?(storedValue: AnyObject?) {
