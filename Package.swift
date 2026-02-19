@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 
 import PackageDescription
 
@@ -20,9 +20,11 @@ let package = Package(
         .target(
             name: "Storez",
             dependencies: [],
-            resources: [.copy("PrivacyInfo.xcprivacy")]),
+            resources: [.copy("PrivacyInfo.xcprivacy")],
+            swiftSettings: [.swiftLanguageMode(.v6)]),
         .testTarget(
             name: "StorezTests",
-            dependencies: ["Storez"]),
+            dependencies: ["Storez"],
+            swiftSettings: [.swiftLanguageMode(.v6)]),
     ]
 )
