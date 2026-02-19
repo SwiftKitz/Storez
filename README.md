@@ -11,7 +11,7 @@
   <a alt="Github CI" href="https://github.com/SwiftKitz/Storez/actions">
     <img alt="Version" src="https://github.com/SwiftKitz/Storez/workflows/Swift/badge.svg" />
   </a>
-  <img alt="Swift" src="https://img.shields.io/badge/swift-5.3-orange.svg" />
+  <img alt="Swift" src="https://img.shields.io/badge/swift-5.9+-orange.svg" />
   <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg" />
 </p>
 
@@ -56,12 +56,10 @@ final class WeatherService {
 
 __Available Stores__
 
-| Store | Backend | Subspec |
-|-------|---------|---------|
-| `UserDefaultsStore` | `NSUserDefaults` | `Storez/UserDefaults` |
-| `CacheStore` | `NSCache` | `Storez/Cache` |
-
-For all stores, simply use `pod "Storez"`
+| Store | Backend |
+|-------|---------|
+| `UserDefaultsStore` | `NSUserDefaults` |
+| `CacheStore` | `NSCache` |
 
 __Type-safe, store-agnostic, nestable Key definitions__
 
@@ -181,14 +179,6 @@ Depending on how your project is structured:
 ```
 
 
-### CocoaPods
-
-[CocoaPods][cocoapods-link] is fully supported. You can choose which store you want to use (see above). Simply add the following line to your [Podfile][podfile-docs]:
-
-```ruby
-pod 'Storez/UserDefaults'
-```
-
 ## Motivation
 
 I've seen a lot of great attempts at statically-types data stores, but they all build a tightly coupled design that limits the end-developer's freedom. With this framework, you can start prototyping right away with the shipped features, then replace the persistence store and `KeyType` functionality with your heart's content __and__ keep your code the way it is!
@@ -201,9 +191,3 @@ Mazyod ([@Mazyod](http://twitter.com/mazyod))
 
 Storez is released under the MIT license. See LICENSE for details.
 
-
-[carthage-link]: https://github.com/Carthage/Carthage
-[cartfile-docs]: https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile
-[cocoapods-link]: https://cocoapods.org/
-[podfile-docs]: https://guides.cocoapods.org/syntax/podfile.html
-[v1.0.0-link]: https://github.com/SwiftKitz/Storez/releases/tag/v1.0.0
