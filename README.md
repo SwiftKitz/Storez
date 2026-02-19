@@ -7,12 +7,12 @@
 </h1>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-4.1.0-blue.svg" />
+  <img alt="Version" src="https://img.shields.io/badge/version-5.0.0-blue.svg" />
   <a alt="Github CI" href="https://github.com/SwiftKitz/Storez/actions">
-    <img alt="Version" src="https://github.com/SwiftKitz/Storez/workflows/Swift/badge.svg" />
+    <img alt="CI" src="https://github.com/SwiftKitz/Storez/workflows/Swift/badge.svg" />
   </a>
-  <img alt="Swift" src="https://img.shields.io/badge/swift-5.9+-orange.svg" />
-  <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg" />
+  <img alt="Swift" src="https://img.shields.io/badge/swift-6.0-orange.svg" />
+  <img alt="Platforms" src="https://img.shields.io/badge/platform-ios%2015%2B%20%7C%20macos%2012%2B%20%7C%20watchos%208%2B%20%7C%20tvos%2015%2B-lightgrey.svg" />
 </p>
 
 ## Highlights
@@ -24,7 +24,10 @@ Customize the persistence store, the `KeyType` class, post-commit actions .. Mak
 In case you just want to use stuff, the framework is shipped with pre-configured basic set of classes that you can just use.
 
 + __Portability, Check!:__<br />
-If you're looking to share code between you app and extensions, watchkit, apple watch, you're covered! You can use the `NSUserDefaults` store, just set your shared container identifier as the suite name.
+If you're looking to share code between your app and extensions, you're covered! Use `UserDefaultsStore` with a shared container suite name.
+
++ __Swift 6 Ready:__<br />
+Full Swift 6 language mode with strict concurrency. All stores and keys are `Sendable`.
 
 **Example:**
 
@@ -58,7 +61,7 @@ __Available Stores__
 
 | Store | Backend |
 |-------|---------|
-| `UserDefaultsStore` | `NSUserDefaults` |
+| `UserDefaultsStore` | `UserDefaults` |
 | `CacheStore` | `NSCache` |
 
 __Type-safe, store-agnostic, nestable Key definitions__
@@ -113,38 +116,34 @@ store.set(nonnull, value: "")
 store.get(nonnull).isEmpty  // true
 ```
 
-__Custom objects easily supported__
-
-**NEW** Simply conform to `Codable`!
-
-_(You can still use `UserDefaultsConvirtable` if needed)_
+__Custom objects easily supported via `Codable`__
 
 ```swift
 struct CustomObject: Codable {
     var strings: [String]
 }
 
-// custom objects properly serialized/deserialized
 let customObject = CustomObject(
     strings: ["fill", "in", "the"]
 )
 
-// let's add a processing block this time
-let CustomValue = Key<GlobalNamespace, CustomObject?>(id: "custom", defaultValue: nil) {
-
+// Add a processing block to transform values on set
+let customKey = Key<GlobalNamespace, CustomObject?>(id: "custom", defaultValue: nil) {
     var processedValue = $0
     processedValue?.strings.append("blank!")
     return processedValue
 }
 
-store.set(CustomValue, value: customObject)
-store.get(CustomValue)?.strings.joinWithSeparator(" ") // fill in the blank!
+store.set(customKey, value: customObject)
+store.get(customKey)?.strings.joined(separator: " ") // fill in the blank!
 ```
+
+You can also use `UserDefaultsConvertible` for custom serialization.
 
 __Make your own `KeyType`__
 
 ```swift
-// For example, make an key that emits NSNotifications
+// For example, make a key that posts notifications on change
 struct MyKey<G: Namespace, V>: KeyType {
 
     typealias NamespaceType = G
@@ -153,10 +152,24 @@ struct MyKey<G: Namespace, V>: KeyType {
     var stringValue: String
     var defaultValue: ValueType
 
-    func didChange(oldValue: ValueType, newValue: ValueType) {
-        NSNotificationCenter.defaultCenter().postNotificationName(stringValue, object: nil)
+    func didChange(_ oldValue: ValueType, newValue: ValueType) {
+        NotificationCenter.default.post(name: .init(stringValue), object: nil)
     }
 }
+```
+
+__Migrate from legacy keys__
+
+```swift
+let migration = UserDefaultsStore.Migration(
+    to: Key<MyNamespace, City>(id: "city", defaultValue: .default),
+    from: "OldCityKey"
+) { oldValue in
+    // Convert the old raw value to the new type
+    City(rawValue: oldValue as! String)
+}
+
+store.migrate([migration])
 ```
 
 ## Getting Started
@@ -175,13 +188,13 @@ Depending on how your project is structured:
 #### To use Storez in a Package.swift file, add this to the `dependencies:` section.
 
 ```swift
-.package(url: "https://github.com/SwiftKitz/Storez.git", .upToNextMinor(from: "3.0.0")),
+.package(url: "https://github.com/SwiftKitz/Storez.git", from: "5.0.0"),
 ```
 
 
 ## Motivation
 
-I've seen a lot of great attempts at statically-types data stores, but they all build a tightly coupled design that limits the end-developer's freedom. With this framework, you can start prototyping right away with the shipped features, then replace the persistence store and `KeyType` functionality with your heart's content __and__ keep your code the way it is!
+I've seen a lot of great attempts at statically-typed data stores, but they all build a tightly coupled design that limits the end-developer's freedom. With this framework, you can start prototyping right away with the shipped features, then replace the persistence store and `KeyType` functionality with your heart's content __and__ keep your code the way it is!
 
 ## Author
 
