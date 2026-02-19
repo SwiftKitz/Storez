@@ -40,3 +40,5 @@ public struct Key<G: Namespace, V>: KeyType {
         return changeBlock?(newValue) ?? newValue
     }
 }
+
+extension Key: @unchecked Sendable where V: Sendable {}

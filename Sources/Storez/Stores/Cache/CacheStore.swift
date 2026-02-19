@@ -9,7 +9,7 @@
 import Foundation
 
 
-public final class CacheStore: Store {
+public final class CacheStore: Store, @unchecked Sendable {
         
     public let cache = NSCache<AnyObject, AnyObject>()
     

@@ -9,7 +9,7 @@
 import Foundation
 
 
-public final class UserDefaultsStore: Store {
+public final class UserDefaultsStore: Store, @unchecked Sendable {
 
     // MARK: - Properties
     

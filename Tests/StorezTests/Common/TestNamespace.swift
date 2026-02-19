@@ -15,12 +15,12 @@ struct TestNamespace: Namespace {
     
     static let anyKey = Key<TestNamespace, String?>(id: "any-key", defaultValue: nil)
     
-    static var preCommitCalls = 0
+    nonisolated(unsafe) static var preCommitCalls = 0
     static func preCommitHook() {
         preCommitCalls += 1
     }
     
-    static var postCommitCalls = 0
+    nonisolated(unsafe) static var postCommitCalls = 0
     static func postCommitHook() {
         postCommitCalls += 1
     }
