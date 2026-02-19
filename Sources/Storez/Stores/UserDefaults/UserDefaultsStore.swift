@@ -35,7 +35,6 @@ public final class UserDefaultsStore: Store {
         K.NamespaceType.preCommitHook()
         
         defaults.set(data, forKey: key.stringValue)
-        defaults.synchronize()
         
         K.NamespaceType.postCommitHook()
     }
@@ -58,7 +57,6 @@ public final class UserDefaultsStore: Store {
         
         defaults.dictionaryRepresentation()
             .forEach { defaults.removeObject(forKey: $0.0) }
-        defaults.synchronize()
     }
 
     public func get<K: KeyType>(_ key: K) -> K.ValueType where K.ValueType: UserDefaultsConvertible {
