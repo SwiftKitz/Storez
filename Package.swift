@@ -19,7 +19,8 @@ let package = Package(
     targets: [
         .target(
             name: "Storez",
-            dependencies: []),
+            dependencies: [],
+            resources: [.copy("PrivacyInfo.xcprivacy")]),
         .testTarget(
             name: "StorezTests",
             dependencies: ["Storez"]),
