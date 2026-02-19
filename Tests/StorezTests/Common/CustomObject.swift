@@ -10,7 +10,7 @@ import Foundation
 import Storez
 
 
-struct CustomObject {
+struct CustomObject: Equatable {
     
     let title: String
     let year: Int
@@ -28,21 +28,18 @@ struct CustomObject {
     }
 }
 
-extension CustomObject: Equatable {
-    static func ==(lhs: CustomObject, rhs: CustomObject) -> Bool {
-        return lhs.title == rhs.title && lhs.year == rhs.year
-    }
-}
-
 
 extension CustomObject: UserDefaultsConvertible {
     
     static func decode(userDefaultsValue value: NSDictionary) -> CustomObject? {
-        
-        return CustomObject(
-            title: value["title"] as! String,
-            year: value["year"] as! Int
-        )
+
+        guard let title = value["title"] as? String,
+              let year = value["year"] as? Int
+        else {
+            return nil
+        }
+
+        return CustomObject(title: title, year: year)
     }
     
     var encodeForUserDefaults: NSDictionary? {
@@ -56,7 +53,8 @@ extension CustomObject: UserDefaultsConvertible {
 extension CustomObject: CacheConvertible {
     
     static func decode(cacheValue value: AnyObject) -> CustomObject? {
-        return decode(userDefaultsValue: value as! NSDictionary)
+        guard let dict = value as? NSDictionary else { return nil }
+        return decode(userDefaultsValue: dict)
     }
     
     var encodeForCache: AnyObject? {
