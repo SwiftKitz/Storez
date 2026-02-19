@@ -19,7 +19,7 @@ swift test -v --filter StorezTests.CacheStoreTests/testFoo  # Run a single test 
 swift build -Xswiftc -strict-concurrency=complete  # Verify concurrency safety
 ```
 
-Platform minimums: iOS 15, macOS 12, tvOS 15, watchOS 8. Swift tools version 5.9.
+Platform minimums: iOS 15, macOS 12, tvOS 15, watchOS 8. Swift tools version 6.0.
 
 ## Architecture
 
@@ -55,7 +55,7 @@ Tests use XCTest with no third-party dependencies. `Common/` contains shared hel
 
 ## Concurrency
 
-Both stores conform to `@unchecked Sendable`. `Key` has conditional `@unchecked Sendable where V: Sendable` (the `changeBlock` closure prevents clean conformance). The library compiles cleanly with `-strict-concurrency=complete`.
+Swift 6 language mode is enabled on both targets via `.swiftLanguageMode(.v6)` in Package.swift. Both stores conform to `@unchecked Sendable`. `Key` has conditional `Sendable where V: Sendable` conformance (the `ChangeBlock` typealias is marked `@Sendable`, enabling clean conformance without `@unchecked`). `GlobalNamespace` conforms to `Sendable`. The library compiles cleanly with `-strict-concurrency=complete`.
 
 ## Privacy
 
