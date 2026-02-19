@@ -152,6 +152,155 @@ class UserDefaultsStoreTests: XCTestCase {
         XCTAssertEqual(TestNamespace.postCommitCalls, 1)
     }
 
+    // MARK: - Migration Tests
+
+    func testMigrationWithCodableValue() {
+
+        // Simulate an old plain UserDefaults entry
+        store.defaults.set("old-city-id", forKey: "LegacyCityKey")
+
+        let newKey = Key<GlobalNamespace, String>(id: "city", defaultValue: "default-city")
+
+        let migration = UserDefaultsStore.Migration(
+            to: newKey,
+            from: "LegacyCityKey"
+        ) { oldValue in
+            // Transform the old value
+            guard let oldString = oldValue as? String else { return nil }
+            return "migrated-\(oldString)"
+        }
+
+        store.migrate([migration])
+
+        // New key should have the migrated value
+        XCTAssertEqual(store.get(newKey), "migrated-old-city-id")
+        // Old key should be removed
+        XCTAssertNil(store.defaults.object(forKey: "LegacyCityKey"))
+    }
+
+    func testMigrationSkipsWhenOldKeyMissing() {
+
+        let newKey = Key<GlobalNamespace, String>(id: "skipped", defaultValue: "default")
+
+        let migration = UserDefaultsStore.Migration(
+            to: newKey,
+            from: "NonExistentKey"
+        ) { oldValue in
+            return oldValue as? String
+        }
+
+        store.migrate([migration])
+
+        // Should still return the default value since no migration occurred
+        XCTAssertEqual(store.get(newKey), "default")
+    }
+
+    func testMigrationSkipsWhenProcessorReturnsNil() {
+
+        store.defaults.set("some-value", forKey: "BadKey")
+
+        let newKey = Key<GlobalNamespace, String>(id: "nil-processor", defaultValue: "default")
+
+        let migration = UserDefaultsStore.Migration(
+            to: newKey,
+            from: "BadKey"
+        ) { _ -> String? in
+            return nil
+        }
+
+        store.migrate([migration])
+
+        // New key should still have default value
+        XCTAssertEqual(store.get(newKey), "default")
+        // Old key should NOT be removed since processor returned nil
+        XCTAssertNotNil(store.defaults.object(forKey: "BadKey"))
+    }
+
+    func testMigrationWithMultipleEntries() {
+
+        store.defaults.set(42, forKey: "OldCount")
+        store.defaults.set("hello", forKey: "OldGreeting")
+
+        let countKey = Key<GlobalNamespace, Int>(id: "count", defaultValue: 0)
+        let greetingKey = Key<GlobalNamespace, String>(id: "greeting", defaultValue: "")
+
+        let migrations = [
+            UserDefaultsStore.Migration(to: countKey, from: "OldCount") { oldValue in
+                return oldValue as? Int
+            },
+            UserDefaultsStore.Migration(to: greetingKey, from: "OldGreeting") { oldValue in
+                guard let str = oldValue as? String else { return nil }
+                return str.uppercased()
+            },
+        ]
+
+        store.migrate(migrations)
+
+        XCTAssertEqual(store.get(countKey), 42)
+        XCTAssertEqual(store.get(greetingKey), "HELLO")
+        XCTAssertNil(store.defaults.object(forKey: "OldCount"))
+        XCTAssertNil(store.defaults.object(forKey: "OldGreeting"))
+    }
+
+    func testMigrationWithCodableStruct() {
+
+        struct Settings: Codable, Equatable, Sendable {
+            let theme: String
+            let fontSize: Int
+        }
+
+        store.defaults.set("dark|16", forKey: "OldSettings")
+
+        let settingsKey = Key<GlobalNamespace, Settings>(
+            id: "settings",
+            defaultValue: Settings(theme: "light", fontSize: 12)
+        )
+
+        let migration = UserDefaultsStore.Migration(
+            to: settingsKey,
+            from: "OldSettings"
+        ) { oldValue in
+            guard let str = oldValue as? String else { return nil }
+            let parts = str.split(separator: "|")
+            guard parts.count == 2, let size = Int(parts[1]) else { return nil }
+            return Settings(theme: String(parts[0]), fontSize: size)
+        }
+
+        store.migrate([migration])
+
+        XCTAssertEqual(store.get(settingsKey), Settings(theme: "dark", fontSize: 16))
+        XCTAssertNil(store.defaults.object(forKey: "OldSettings"))
+    }
+
+    func testMigrationWithEmptyArray() {
+
+        // Should not crash with empty array
+        store.migrate([])
+    }
+
+    func testMigrationPreservesExistingNewKeyValue() {
+
+        // Set a value using the store (typed key)
+        let newKey = Key<GlobalNamespace, String>(id: "existing", defaultValue: "default")
+        store.set(newKey, value: "already-set")
+
+        // Also set an old key
+        store.defaults.set("old-value", forKey: "OldExisting")
+
+        let migration = UserDefaultsStore.Migration(
+            to: newKey,
+            from: "OldExisting"
+        ) { oldValue in
+            return oldValue as? String
+        }
+
+        store.migrate([migration])
+
+        // The migration overwrites the existing value (this is expected behavior)
+        XCTAssertEqual(store.get(newKey), "old-value")
+        XCTAssertNil(store.defaults.object(forKey: "OldExisting"))
+    }
+
     func testLegacyCodableConverters() {
         // legacy keys
         let refDate = NSDate(timeIntervalSinceReferenceDate: 20)

@@ -90,6 +90,23 @@ public final class UserDefaultsStore: Store, @unchecked Sendable {
     public func set<K: KeyType>(_ key: K, value: K.ValueType) where K.ValueType: Codable {
         _set(key, box: UserDefaultsCodableBox(value))
     }
+
+    // MARK: - Migration
+
+    /// Performs a list of migrations, moving old plain UserDefaults
+    /// entries to new typed Storez keys.
+    ///
+    /// Each `Migration` reads its old key from UserDefaults, converts
+    /// the value using its processor, writes it under the new key,
+    /// and removes the old key. Entries whose old key does not exist
+    /// are silently skipped.
+    ///
+    /// - Parameter migrations: An array of `Migration` entries to run.
+    public func migrate(_ migrations: [Migration]) {
+        for migration in migrations {
+            migration.perform(defaults)
+        }
+    }
 }
 
 
