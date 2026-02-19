@@ -20,7 +20,7 @@ struct UserDefaultsSupportedTypeBox<T: UserDefaultsSupportedType>: UserDefaultsT
     let value: T
     
     var supportedType: Data? {
-        return value.encode as Data
+        return value.encode
     }
     
     init?(storedValue: Data?) {
@@ -42,7 +42,7 @@ struct UserDefaultsNullableSupportedTypeBox<T: Nullable>: UserDefaultsTransactio
     let value: T
     
     var supportedType: Data? {
-        return value.wrappedValue?.encode as Data?
+        return value.wrappedValue?.encode
     }
     
     init?(storedValue: Data?) {
