@@ -15,7 +15,11 @@ swift test -v --filter StorezTests.CacheStoreTests          # Run a single test 
 swift test -v --filter StorezTests.CacheStoreTests/testFoo  # Run a single test method
 ```
 
-Platform minimums: iOS 9, macOS 10.12, tvOS 9, watchOS 4. Swift tools version 5.2.
+```bash
+swift build -Xswiftc -strict-concurrency=complete  # Verify concurrency safety
+```
+
+Platform minimums: iOS 15, macOS 12, tvOS 15, watchOS 8. Swift tools version 5.9.
 
 ## Architecture
 
@@ -49,6 +53,10 @@ Both stores follow the same internal pattern:
 
 Tests use XCTest with no third-party dependencies. `Common/` contains shared helpers: `TestNamespace` and `CustomObject` (a Codable test type). Both store test classes call `store.clear()` in `setUp()` for isolation.
 
-## CocoaPods
+## Concurrency
 
-The podspec defines three subspecs: `Core` (Entity layer only), `UserDefaults`, and `Cache`. The default subspec `All` includes both store implementations.
+Both stores conform to `@unchecked Sendable`. `Key` has conditional `@unchecked Sendable where V: Sendable` (the `changeBlock` closure prevents clean conformance). The library compiles cleanly with `-strict-concurrency=complete`.
+
+## Privacy
+
+Includes `PrivacyInfo.xcprivacy` declaring `UserDefaults` usage (reason `CA92.1`), required for App Store submission since May 2024.
