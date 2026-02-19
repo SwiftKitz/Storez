@@ -1,15 +1,14 @@
-// swift-tools-version:5.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.9
 
 import PackageDescription
 
 let package = Package(
     name: "Storez",
     platforms: [
-        .iOS(.v9),
-        .macOS(.v10_12),
-        .tvOS(.v9),
-        .watchOS(.v4),
+        .iOS(.v15),
+        .macOS(.v12),
+        .tvOS(.v15),
+        .watchOS(.v8),
     ],
     products: [
         .library(
